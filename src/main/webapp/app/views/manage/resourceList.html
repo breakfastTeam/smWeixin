@@ -1,0 +1,75 @@
+<#assign ctx=request.contextPath>
+    <div class="container">
+        <div class="row">
+            <form id="search" class="form-inline" role="form">
+                <button id="addProduct" class="btn btn-success">新增</button>
+            </form>
+            <div class="col-md-10" style="margin-top:20px;">
+                <div id="tds">
+                    <table class="table table-bordered table-responsive table-striped" id="table">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">id</th>
+                            <th class="col-md-2">类别</th>
+                            <th class="col-md-2">标题</th>
+                            <th class="col-md-1">缩略图</th>
+                            <th class="col-md-1">背景图</th>
+                            <th class="col-md-2">简介</th>
+                            <th class="col-md-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list resources as resource>
+                            <tr>
+                                <td>${resource_index+1}</td>
+                                <td>${resource.categoryName}</td>
+                                <td>${resource.name}</td>
+                                <td><a class="fa fa-image fancybox" href="${resource.thumbnail}"></a></td>
+                                <td><a class="fa fa-image fancybox" href="${resource.banner}"></a></td>
+                                <td>${resource.intro}</td>
+                                <td>
+                                    <a href="javascript:void(0);" data-opt="view" data-id="${resource.id}">查看</a>
+                                    <a href="javascript:void(0);" data-id="${resource.id}">删除</a>
+                                </td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                    <#if (resources![])?size < 1>
+                    <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 20px;">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>没有记录!</strong>
+                    </div>
+                    </#if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+
+            $('#addProduct').click(function(){
+                $('#content').load('${ctx}/manage/resource/add?categoryId=${categoryId!}');
+                return false;
+            })
+
+            $('#table').on('click','a',function(){
+                var opt=$(this).data('opt');
+                var resourceId=$(this).data('id');
+                if(opt=='view'){
+                    $('#content').load('${ctx}/manage/resource/add?categoryId=${categoryId!}&resourceId='+resourceId);
+                }else{
+                    $.post('${ctx}/manage/product/delete',{resourceId:resourceId},function(){
+                        $.mhtMsg('操作成功!');
+                        $('#content').load('${ctx}/manage/resourcesList/list?categoryId=${categoryId!}');
+                    })
+                }
+            })
+
+            $('#resetForm').click(function(){
+                $('#name').val('');
+                return false;
+            })
+
+        });
+    </script>

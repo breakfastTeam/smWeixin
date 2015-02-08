@@ -1,0 +1,68 @@
+<#assign ctx=request.contextPath>
+<div class="container">
+    <div class="row">
+        <form id="search" class="form-inline" role="form">
+            <div class="form-group">
+                <label for="name">标题：</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <input name="categoryId" type="hidden" value="${categoryId!}"/>
+            <button id="findProduct" class="btn btn-primary">查找</button>
+            <button id="resetForm" class="btn btn-warning">重置</button>
+            <button id="addProduct" class="btn btn-success">新增</button>
+        </form>
+        <div class="col-md-10" style="margin-top:20px;">
+            <div id="tds">
+
+            </div>
+            <div class="col-md-10 pagination pull-right"><ul id="pagination" class="pagination-sm pull-right"></ul></div>
+        </div>
+    </div>
+</div>
+<script>
+    var pageUrl = '${ctx!}/manage/products/list';
+    $(function() {
+        loadDataPage();
+
+        $('#findProduct').click(function(){
+            var json={
+                name:$('#name').val(),
+                page:1,
+                size:10
+            }
+            $('#tds').load(pageUrl,json,function(){});
+            return false;
+        })
+
+        $('#addProduct').click(function(){
+            $('#content').load('${ctx}/manage/product/add');
+            return false;
+        })
+
+        $('#resetForm').click(function(){
+            $('#name').val('');
+            return false;
+        })
+
+    });
+    function loadDataPage(){
+        var json={
+            name:$('#name').val(),
+            page:1,
+            size:10
+        }
+        $('#tds').load(pageUrl,json,function(){
+            var totalPages=parseInt($('#totalPages').val());
+            var pageSize=parseInt($('#size').val());
+            $('#pagination').twbsPagination({
+                totalPages: totalPages,
+                visiblePages: totalPages%10,
+                onPageClick: function (event, page) {
+                    json.size=pageSize;
+                    json.page=page;
+                    $('#tds').load(pageUrl,json,function(){});
+                }
+            });
+        });
+    }
+</script>

@@ -1,0 +1,70 @@
+<#assign ctx=request.contextPath>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登陆管理员界面</title>
+
+    <link href="${ctx}/asset/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${ctx}/asset/css/signin.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="${ctx}/asset/js/html5shiv.min.js"></script>
+    <script src="${ctx}/asset/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <h2 class="form-signin-heading text-center">微信后台管理系统</h2>
+    <form class="form-signin form-horizontal" role="form">
+        <div class="form-group">
+            <label for="loginName" class="col-sm-4 control-label">账号：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="loginName" name="loginName" placeholder="登陆名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-4 control-label">密码：</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div id="alertMsg" class="col-sm-offset-2 col-sm-10 text-center alert alert-warning alert-dismissible" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>系统提示!</strong> <span id="em">用户名或密码错误!</span>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-center" style="margin-top: 20px;">
+                <button type="submit" id="login" class="btn btn-primary btn-lg">登陆</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="${ctx}/asset/js/jquery.min.js"></script>
+<script src="${ctx}/asset/js/bootstrap.min.js"></script>
+<script>
+    $(function(){
+        $('#login').click(function(e){
+            e.preventDefault();
+            var user={
+                loginName:$('#loginName').val(),
+                password:$('#password').val()
+            };
+            $.post('${ctx}/manage/toLogin',user,function(result){
+                if(result&&result.success) {
+                    location.href='${ctx}/manage/index';
+                }else{
+                    $('#alertMsg').show();
+                    $('#em').text(result.message||'用户名或密码错误!');
+                }
+            })
+            return false;
+        })
+    })
+</script>
+</html>

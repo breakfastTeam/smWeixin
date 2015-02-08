@@ -1,0 +1,75 @@
+<#assign ctx=request.contextPath>
+<div class="container">
+    <div class="row">
+        <form id="search" class="form-inline" role="form">
+            <button id="addProduct" class="btn btn-success">新增</button>
+        </form>
+        <div class="col-md-10" style="margin-top:20px;">
+            <div id="tds">
+
+                <table class="table table-bordered table-responsive table-striped" id="table">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">id</th>
+                        <th class="col-md-2">名称</th>
+                        <th class="col-md-1">Logo</th>
+                        <th class="col-md-1">缩略图</th>
+                        <th class="col-md-1">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list categorys as category>
+                        <tr>
+                            <td>${category_index+1}</td>
+                            <td>${category.name}</td>
+                            <td><a class="fa fa-image fancybox" href="${category.logo}"></a></td>
+                            <td><a class="fa fa-image fancybox" href="${category.thumbnail}"></a></td>
+                            <td>
+                                <a href="javascript:void(0);" data-opt="view" data-id="${category.id}">查看</a>
+                                <a href="javascript:void(0);" data-opt="list" data-id="${category.id}">列表</a>
+                                <a href="javascript:void(0);" data-opt="delete" data-id="${category.id}">删除</a>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+                <#if (categorys![])?size < 1>
+                    <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 20px;">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>没有记录!</strong>
+                    </div>
+                </#if>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+
+        $('#addProduct').click(function(){
+            $('#content').load('${ctx}/manage/resourceType/add?resourceType=${resourceType!}');
+            return false;
+        })
+
+        $('#table').on('click','a',function(){
+            var opt=$(this).data('opt');
+            var categoryId=$(this).data('id');
+            if(opt=='view'){
+                $('#content').load('${ctx}/manage/resourceType/add?resourceType=${resourceType!}&categoryId='+categoryId);
+            }else if(opt=='list'){
+                $('#content').load('${ctx}/manage/resourcesList/list?categoryId='+categoryId);
+            }else{
+                $.get('${ctx}/manage/resourceType/delete',{categoryId:categoryId},function(){
+                    $.mhtMsg('操作成功!');
+                    $('#content').load('${ctx}/manage/resources?category=${resourceType!}');
+                })
+            }
+        })
+
+        $('#resetForm').click(function(){
+            $('#name').val('');
+            return false;
+        })
+
+    });
+</script>

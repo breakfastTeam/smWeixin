@@ -1,0 +1,50 @@
+<#include "*/common/webUtils.ftl">
+<#assign ctx=request.contextPath>
+<table class="table table-bordered table-responsive table-striped" id="table">
+    <thead>
+    <tr>
+        <th class="col-md-1">id</th>
+        <th class="col-md-2">类别</th>
+        <th class="col-md-2">标题</th>
+        <th class="col-md-1">缩略图</th>
+        <th class="col-md-1">背景图</th>
+        <th class="col-md-2">简介</th>
+        <th class="col-md-1">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <#list page.getContent() as resource>
+        <tr>
+            <td>${resource_index+1}</td>
+            <td>${resource.categoryName}</td>
+            <td>${resource.name}</td>
+            <td><a class="fa fa-image fancybox" href="${resource.thumbnail}"></a></td>
+            <td><a class="fa fa-image fancybox" href="${resource.banner}"></a></td>
+            <td>${resource.intro}</td>
+            <td>
+                <a href="javascript:void(0);" data-opt="view" data-id="${resource.id}">查看</a>
+                <a href="javascript:void(0);" data-id="${resource.id}">删除</a>
+            </td>
+        </tr>
+    </#list>
+    </tbody>
+</table>
+<@emptyPage page=page msg="没有任何记录"/>
+<@pageParam/>
+
+<script>
+    $(function(){
+        $('#table').on('click','a',function(){
+            var opt=$(this).data('opt');
+            var resourceId=$(this).data('id');
+            if(opt=='view'){
+                $('#content').load('${ctx}/manage/product/view?resourceId='+resourceId);
+            }else{
+                $.post('${ctx}/manage/product/delete',{resourceId:resourceId},function(){
+                    $('#findresource').trigger('click');
+                    $.mhtMsg('操作成功!');
+                })
+            }
+        })
+    })
+</script>

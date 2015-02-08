@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <!-- 指定数据库配置信息 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:c3p0.properties</value>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:conf.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:conf.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="dataSourceProxool"
+          class="org.logicalcobwebs.proxool.ProxoolDataSource">
+        <property name="driver">
+            <value>${jdbc.driverClassName}</value>
+        </property>
+        <property name="driverUrl">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="alias" value="Pool_dbname" />
+        <property name="houseKeepingSleepTime" value="90000" />
+        <property name="prototypeCount" value="0" />
+        <property name="maximumConnectionCount" value="50" />
+        <property name="minimumConnectionCount" value="2" />
+        <property name="simultaneousBuildThrottle" value="50" />
+        <property name="maximumConnectionLifetime" value="14400000" />
+        <property name="houseKeepingTestSql" value="select CURRENT_DATE" />
+    </bean>
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSourceProxool" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="false" />
+                <property name="database" value="MYSQL" />
+            </bean>
+        </property>
+    </bean>
+
+    <jpa:repositories base-package="com.sm.repository"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <!-- 配置事务切面Bean,指定事务管理器 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 用于配置详细的事务语义 -->
+        <tx:attributes>
+            <!-- 所有以'get'开头的方法是read-only的 -->
+            <tx:method name="get*" read-only="true"/>
+            <!-- 所有以'sel'开头的方法是read-only的 -->
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="list*" read-only="true"/>
+            <tx:method name="load*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <!-- 其他方法使用默认的事务设置 -->
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <tx:annotation-driven/>
+    <bean id="persistenceAnnotation" class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+</beans>

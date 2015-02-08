@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href="../asset/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/uikit.min.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/style.css">
+
+
+    <title>新闻活动列表</title>
+
+</head>
+<body>
+
+<!-- 头部 -->
+<div class="uk-container uk-margin-bottom padding0">
+    <div class="uk-grid uk-align-center">
+        <div class="uk-width-1-1 padding0">
+            <img src="../asset/imgs/top.jpg" width="100%">
+        </div>
+    </div>
+
+
+    <!-- /头部 -->
+
+    <!-- 主体 -->
+    <div class="uk-grid uk-align-center width95">
+
+        <form name="seach" class="uk-width-1-1" method="post"
+              action="http://mia.lenovo.com.cn/index.php?s=/Home/News/index/cate_id/64.html"
+              onsubmit="return formchk();">
+            <img src="./newsList_files/5361226fdae79.jpg" width="26%" class="search_img">
+            <input type="text" name="title" id="title" class="pro_serach">
+            <input type="submit" value="检索" class="pro_bt">
+        </form>
+
+    </div>
+    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/News/detail/cate_id/64/id/123.html"
+       class="uk-grid uk-align-center width95" name="content">
+        <div class="uk-width-2-10 padding0"><img src="./newsList_files/5360edd7ed777.jpg" width="100%"
+                                                 style="height: 240px;"></div>
+        <div class="uk-width-8-10 padding_left15">
+            <p class="pro_p1">联想MIA微信公众平台上线啦！</p>
+
+            <p class="pro_p2">
+                亲们，经过小编们的加班加点的艰苦努力，联想移动互联行业互联 微信公众平台 终于上线啦！​ </p>
+        </div>
+    </a>
+
+    <form method="post" action="http://mia.lenovo.com.cn/index.php?s=/Home/News/index/cate_id/64.html">
+        <input type="hidden" name="more" value="ok">
+
+        <div class="uk-grid uk-align-center" style="display:none;">
+            <button class="bt4" type="submit"><p style="font-size:24px;">查 看 更 多 <img src="./newsList_files/pre.png"
+                                                                                      width="20"></p></button>
+
+        </div>
+    </form>
+</div>
+
+
+<!-- /主体 -->
+
+<!-- 底部 -->
+<footer>
+
+</footer>
+<!-- /底部 -->
+
+</body>
+<script type="text/javascript" src="../asset/js/jquery.min.js"></script>
+<script type="text/javascript" src="../asset/js/jquery.raty.min.js"></script>
+<script type="text/javascript">
+    function formchk() {
+        var addform = document.seach;
+        if (addform.title.value == "") {
+            alert("搜索内容不能为空!");
+            addform.title.focus();   //用户名输入框获得焦点
+            return false;   //不提交表单
+        }
+        return true;   //输入符合要求后执行表单提交操作
+    }
+    $(document).ready(function () {
+        $("a[name='content'] img").each(function () {
+            $(this).css("height", $(this).width());
+        });
+    });
+</script>
+</html>

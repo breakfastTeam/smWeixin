@@ -1,0 +1,70 @@
+<#assign ctx=request.contextPath>
+<div class="row">
+    <div class="col-md-12 toppad">
+        <div class="panel panel-info" style="margin-bottom: 0px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">密码修改</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" id="passForm">
+                    <div class="form-group">
+                        <label for="originalPass" class="col-md-3 control-label">原密码：</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="originalPass" placeholder="Password" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="changePass1" class="col-md-3 control-label">新密码：</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="changePass1" placeholder="Password" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="changePass2" class="col-md-3 control-label">确认密码：</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="changePass2" placeholder="Password" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-6">
+                            <button type="submit" class="btn btn-primary">完成</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#passForm').submit(function(){
+            var originalPass = $('#originalPass').val();
+            var changePass1 = $('#changePass1').val();
+            var changePass2 = $('#changePass2').val();
+            if(changePass1==changePass2) {
+                $.post('${ctx!}/manage/changePass',{userId:'${user.userId}',originalPass:originalPass,changePass:changePass1},function(res){
+                    if(res&&res.success){
+                        new PNotify({
+                            text: '密码修改成功.',
+                            animate_speed: 'fast',
+                            type: 'success'
+                        });
+                    }else{
+                        new PNotify({
+                            text: res.message,
+                            animate_speed: 'fast',
+                            type: 'error'
+                        });
+                    }
+                })
+            }else{
+                new PNotify({
+                    text: '新密码和确认密码不一致.',
+                    animate_speed: 'fast',
+                    type: 'error'
+                });
+            }
+            return false;
+        })
+    })
+</script>
