@@ -11,8 +11,10 @@ import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.google.common.collect.Lists;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
+import com.sm.entity.Video;
 import com.sm.repository.CategoryRepository;
 import com.sm.repository.ResourceRepository;
+import com.sm.repository.VideoRepository;
 import com.sm.util.SmUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,8 @@ public class WeixinController extends WeixinControllerSupport {
     private ResourceRepository resourceRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private VideoRepository videoRepository;
     @Value("#{configProperties['host']}")
     private String host;
 
@@ -72,7 +76,7 @@ public class WeixinController extends WeixinControllerSupport {
                 articles.add(article);
             }
             return new NewsMsg(articles);
-        }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")||content.equals("videos")){
+        }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")){
             //解决方案、案例、demo
             List<Category> categorys = categoryRepository.findByType(content);
             List<Article> articles = Lists.newArrayList();
@@ -82,6 +86,18 @@ public class WeixinController extends WeixinControllerSupport {
                 article.setPicUrl(category.getThumbnail());
                 article.setTitle(category.getName());
                 article.setUrl(host+"/web/resourceList?categoryId="+category.getId());
+                articles.add(article);
+            }
+            return new NewsMsg(articles);
+        }else if(content.equals("videos")){
+            List<Video> videos = videoRepository.findAll();
+            List<Article> articles = Lists.newArrayList();
+            Article article = null;
+            for(Video video:videos){
+                article = new Article();
+                article.setPicUrl(video.getLogo());
+                article.setTitle(video.getName());
+                article.setUrl(host+"/web/videoList");
                 articles.add(article);
             }
             return new NewsMsg(articles);

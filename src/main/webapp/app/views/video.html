@@ -49,7 +49,7 @@
 
     <div class="uk-grid uk-align-center">
         <div class="uk-width-1-1">
-            <p style="font-size:18px; color:#3d3d3d;">联想电子书包解决方案宣传片</p>
+            <p style="font-size:18px; color:#3d3d3d;">${video.name}</p>
         </div>
     </div>
 
@@ -57,16 +57,16 @@
         <div class="uk-width-1-1 padding10">
             <video id="example_video_1" class="video-js vjs-default-skin" controls="" preload="none" width="100%"
                    data-setup="{}">
-                <source src="./Uploads/Download/2014-04-30/5360ec0bba348.mp4" type="video/mp4">
-                <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>
-                <!-- Tracks need an ending tag thanks to IE9 -->
-                <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>
+                <source src="${video.url}" type="video/mp4">
+                <!--<track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>-->
+                <!--&lt;!&ndash; Tracks need an ending tag thanks to IE9 &ndash;&gt;-->
+                <!--<track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>-->
                 <!-- Tracks need an ending tag thanks to IE9 -->
             </video>
             <p></p>
 
             <h3>
-                视频大小：12MB &nbsp; &nbsp; &nbsp;视频时长：3分11秒
+                视频大小：${video.size}MB &nbsp; &nbsp; &nbsp;视频时长：${video.length}
             </h3>
 
             <p></p>

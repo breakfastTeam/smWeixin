@@ -1,3 +1,4 @@
+<#assign ctx=request.contextPath>
 <!DOCTYPE html>
 <!-- saved from url=(0100)http://mia.lenovo.com.cn/index.php?s=/Home/Data/video.html&FromUserName=ouMyKt-u1q2TWL4PARmRXG4AzBY0 -->
 <html>
@@ -46,18 +47,19 @@
     <!-- /头部 -->
 
     <!-- 主体 -->
-
+<#list videos as video>
     <div class="uk-grid uk-align-center padding10" id="content">
         <ul class="padding0 video" style="width:100%;">
             <li class="uk-width-1-1">
-                <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/video_detail/id/114/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html">
-                    <img src="./videoList_files/53610edeb1074.jpg" width="100%">
+                <a href="${ctx}/web/video?videoId=${video.id}">
+                    <img src="${video.logo}" width="100%">
 
-                    <p class="title1" style="font-size:16px; margin-top:4px;">联想电子书包解决方案宣传片</p>
+                    <p class="title1" style="font-size:16px; margin-top:4px;">${video.name}</p>
                 </a>
             </li>
         </ul>
     </div>
+</#list>
 </div>
 
 <!--

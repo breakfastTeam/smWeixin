@@ -2,9 +2,11 @@ package com.sm.controller;
 
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
+import com.sm.entity.Video;
 import com.sm.repository.CategoryRepository;
 import com.sm.repository.ResourceRepository;
 import com.sm.repository.UserRepository;
+import com.sm.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ public class WebController {
     private ResourceRepository resourceRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private VideoRepository videoRepository;
 
     @RequestMapping(value={"/","/about"})
     public String index() {
@@ -51,13 +55,21 @@ public class WebController {
     }
 
     @RequestMapping("videoList")
-    public String videoList() {
-        return "videoList";
+    public ModelAndView videoList() {
+        List<Video> videos = videoRepository.findAll();
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("videos", videos);
+        mv.setViewName("videoList");
+        return mv;
     }
 
     @RequestMapping("video")
-    public String video() {
-        return "video";
+    public ModelAndView video(@RequestParam Long videoId) {
+        Video video = videoRepository.findOne(videoId);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("video", video);
+        mv.setViewName("video");
+        return mv;
     }
 
     @RequestMapping("productIntro")
@@ -88,5 +100,4 @@ public class WebController {
     public String news() {
         return "news";
     }
-
 }
