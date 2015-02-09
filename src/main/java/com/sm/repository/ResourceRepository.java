@@ -20,5 +20,7 @@ public interface ResourceRepository extends JpaRepository<Resource,Long> {
 
     List<Resource> findByNameLikeAndCategoryId(String name, Long categoryId);
 
+    Page<Resource> findByNameLikeAndCategoryId(String name, Long categoryId, Pageable pageable);
+
     List<Resource> findByCategoryId(Long categoryId);
 }

@@ -75,7 +75,7 @@ public class WebController {
     @RequestMapping("productIntro")
     public ModelAndView productIntro() {
         Category category = categoryRepository.findOneByType("products");
-        List resources = resourceRepository.findByCategoryId(category.getId());
+        List<Resource> resources = resourceRepository.findByCategoryId(category.getId());
         ModelAndView mv = new ModelAndView();
         mv.addObject("resources", resources);
         mv.setViewName("productIntro");

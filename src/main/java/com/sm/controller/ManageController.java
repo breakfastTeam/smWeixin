@@ -151,11 +151,11 @@ public class ManageController {
         return jsonResult;
     }
     @RequestMapping("products/list")
-    public ModelAndView productsList(@RequestParam int page,@RequestParam int size,
+    public ModelAndView productsList(@RequestParam int page,@RequestParam int size,@RequestParam Long categoryId,
                                     @RequestParam(required = false) String name) {
         ModelAndView mv = new ModelAndView();
         Pageable pageable= new PageRequest(page-1,size,new Sort(new Sort.Order(Sort.Direction. DESC,"id")));
-        Page<Resource> dataPage = resourceRepository.findByNameLike("%"+name+"%", pageable);
+        Page<Resource> dataPage = resourceRepository.findByNameLikeAndCategoryId("%" + name + "%", categoryId, pageable);
         mv.addObject("page",dataPage);
         mv.setViewName("manage/productsList");
         return mv;

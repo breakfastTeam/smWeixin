@@ -6,7 +6,7 @@
                 <label for="name">标题：</label>
                 <input type="text" class="form-control" id="name" name="name">
             </div>
-            <input name="categoryId" type="hidden" value="${categoryId!}"/>
+            <input name="categoryId" id="categoryId" type="hidden" value="${categoryId!}"/>
             <button id="findProduct" class="btn btn-primary">查找</button>
             <button id="resetForm" class="btn btn-warning">重置</button>
             <button id="addProduct" class="btn btn-success">新增</button>
@@ -27,6 +27,7 @@
         $('#findProduct').click(function(){
             var json={
                 name:$('#name').val(),
+                categoryId:$('#categoryId').val(),
                 page:1,
                 size:10
             }
@@ -48,6 +49,7 @@
     function loadDataPage(){
         var json={
             name:$('#name').val(),
+            categoryId:$('#categoryId').val(),
             page:1,
             size:10
         }
