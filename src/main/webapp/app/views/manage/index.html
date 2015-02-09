@@ -75,11 +75,17 @@
             $('#content').load('${ctx}/manage/products?category=products');
         })
 
-        $('#schemes,#cases,#demos,#videos').click(function(){
+        $('#schemes,#cases,#demos').click(function(){
             $('.active').removeClass('active');
             $(this).parent('li').addClass('active');
             var id = $(this).attr('id');
             $('#content').load('${ctx}/manage/resources?category='+id);
+        })
+
+        $('#videos').click(function(){
+            $('.active').removeClass('active');
+            $(this).parent('li').addClass('active');
+            $('#content').load('${ctx}/manage/videos');
         })
 
         $('#changePass').click(function(){

@@ -5,9 +5,11 @@ import com.google.common.collect.Maps;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
 import com.sm.entity.User;
+import com.sm.entity.Video;
 import com.sm.repository.CategoryRepository;
 import com.sm.repository.ResourceRepository;
 import com.sm.repository.UserRepository;
+import com.sm.repository.VideoRepository;
 import com.sm.util.CommonUtils;
 import com.sm.util.JsonResult;
 import com.sm.util.SmUtils;
@@ -46,6 +48,8 @@ public class ManageController {
     private ResourceRepository resourceRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private VideoRepository videoRepository;
     @Value("#{configProperties['host']}")
     private String host;
 
@@ -255,6 +259,69 @@ public class ManageController {
         }
         mv.setViewName("manage/resourceAdd");
         return mv;
+    }
+
+    @RequestMapping("videos")
+    public ModelAndView videos() {
+        ModelAndView mv = new ModelAndView();
+        List<Video> videos= videoRepository.findAll();
+        mv.addObject("videos", videos);
+        mv.setViewName("manage/videos");
+        return mv;
+    }
+
+    @RequestMapping("video/add")
+    public ModelAndView videoAdd(@RequestParam(required = false) Long videoId) {
+        ModelAndView mv = new ModelAndView();
+        if (videoId != null) {
+            Video video = videoRepository.findOne(videoId);
+            mv.addObject("video", video);
+        }
+        mv.setViewName("manage/videoAdd");
+        return mv;
+    }
+
+    @RequestMapping("video/save")
+    public JsonResult videoSave(HttpServletRequest request) {
+        JsonResult jsonResult = new JsonResult();
+        Video video = new Video();
+        String idStr = request.getParameter("id");
+        DateTime now = DateTime.now();
+        Long id = 0L;
+        if (StringUtils.isNotBlank(idStr) && StringUtils.isNumeric(idStr)) {
+            id = Long.valueOf(idStr);
+            video = videoRepository.findOne(id);
+        }else{
+            video.setCreated(now);
+        }
+        if(ServletFileUpload.isMultipartContent(request)){
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+            MultipartFile logo = multiRequest.getFile("logo");
+            if (logo != null) {
+                String logoPath=this._saveFile(logo, request);
+                video.setLogo(logoPath);
+            }
+            MultipartFile url = multiRequest.getFile("url");
+            if (url != null) {
+                String urlPath=this._saveFile(url, request);
+                video.setUrl(urlPath);
+            }
+        }
+        video.setName(request.getParameter("name"));
+        video.setSize(request.getParameter("size"));
+        video.setLength(request.getParameter("length"));
+        video.setUpdated(now);
+        Video result = videoRepository.saveAndFlush(video);
+        jsonResult.setSuccess(result != null);
+        return jsonResult;
+    }
+
+    @RequestMapping("video/delete")
+    public JsonResult videoDelete(@RequestParam Long videoId) {
+        JsonResult jsonResult = new JsonResult();
+        videoRepository.delete(videoId);
+        jsonResult.setSuccess(true);
+        return jsonResult;
     }
 
     @RequestMapping("toChangePass")

@@ -1,19 +1,29 @@
 package com.sm.entity;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import javax.persistence.*;
 
 /**
  * Created by Ez丶kkk on 15/2/5.
  */
+@Entity
+@Table(name = "video")
 public class Video {
-
-    private Long id;
-    private String name;
-    private String logo;
-    private String url;
-    private String size;
-    private String length;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")      private Long id;
+    @Column(name="name")    private String name;
+    @Column(name="logo")    private String logo;
+    @Column(name="url")     private String url;
+    @Column(name="size")    private String size;
+    @Column(name="length")  private String length;
+    @Column(name="created")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime created;
+    @Column(name="updated")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime updated;
 
     public Long getId() {

@@ -1,7 +1,17 @@
 package com.sm.controller;
 
+import com.sm.entity.Category;
+import com.sm.entity.Resource;
+import com.sm.repository.CategoryRepository;
+import com.sm.repository.ResourceRepository;
+import com.sm.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * Created by Ez丶kkk on 15/2/7.
@@ -10,19 +20,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/web")
 public class WebController {
 
+    @Autowired
+    private ResourceRepository resourceRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @RequestMapping(value={"/","/about"})
     public String index() {
         return "about";
     }
 
     @RequestMapping("resourceList")
-    public String resourceList() {
-        return "resourcesList";
+    public ModelAndView resourceList(@RequestParam Long categoryId) {
+        Category category = categoryRepository.findOne(categoryId);
+        List resources = resourceRepository.findByCategoryId(category.getId());
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("resources", resources);
+        mv.addObject("category", category);
+        mv.setViewName("resourcesList");
+        return mv;
     }
 
     @RequestMapping("resource")
-    public String resource() {
-        return "resource";
+    public ModelAndView resource(@RequestParam Long resourceId) {
+        Resource resource = resourceRepository.findOne(resourceId);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("resource", resource);
+        mv.setViewName("resource");
+        return mv;
     }
 
     @RequestMapping("videoList")
@@ -36,13 +61,22 @@ public class WebController {
     }
 
     @RequestMapping("productIntro")
-    public String productIntro() {
-        return "productIntro";
+    public ModelAndView productIntro() {
+        Category category = categoryRepository.findOneByType("products");
+        List resources = resourceRepository.findByCategoryId(category.getId());
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("resources", resources);
+        mv.setViewName("productIntro");
+        return mv;
     }
 
     @RequestMapping("product")
-    public String product() {
-        return "product";
+    public ModelAndView product(@RequestParam Long resourceId) {
+        Resource resource = resourceRepository.findOne(resourceId);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("resource", resource);
+        mv.setViewName("product");
+        return mv;
     }
 
     @RequestMapping("newsList")

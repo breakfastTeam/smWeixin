@@ -1,3 +1,4 @@
+<#assign ctx=request.contextPath>
 <!DOCTYPE html>
 <!-- saved from url=(0108)http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/179/FromUserName/oA7ZTuJiWOlYkI5Wz8DsC_uyfnwU.html -->
 <html>
@@ -37,7 +38,7 @@
 <div class="uk-container uk-margin-bottom padding0">
     <div class="uk-grid uk-align-center">
         <div class="uk-width-1-1 padding0 produ_bg">
-            <p class="produ_title">大客户专属A7-60</p>
+            <p class="produ_title">${resource.categoryName}</p>
         </div>
     </div>
 
@@ -47,8 +48,11 @@
 
     <div class="uk-grid uk-align-center width95">
         <div class="uk-width-1-1 padding10" id="content">
-            <img src="./product_files/A7(0820)-0153f614e52d661.jpg" alt="" style="cursor: pointer;"><img
-                src="./product_files/A7(0820)-0253f614f39c661.jpg" alt="" style="cursor: pointer;"></div>
+            <img src="${resource.banner}" alt="" style="cursor: pointer;">
+            <p>
+                ${resource.content}
+            </p>
+        </div>
     </div>
 </div>
 
@@ -56,8 +60,8 @@
     $(document).ready(function () {
         $("#content img").css("cursor", "pointer");
         $("#content img").click(function () {
-            var viewUrl = "/index.php?s=/Home/Public/viewPic.html";
-            location.href = viewUrl + "&src=" + $(this).attr("src");
+//            var viewUrl = "/index.php?s=/Home/Public/viewPic.html";
+//            location.href = viewUrl + "&src=" + $(this).attr("src");
         });
         s
     });

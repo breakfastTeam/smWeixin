@@ -1,3 +1,4 @@
+<#assign ctx=request.contextPath>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,178 +44,30 @@
                 return true;   //输入符合要求后执行表单提交操作
             }
         </script>
-        <form name="seach" class="uk-width-1-1" method="post"
-              action="http://mia.lenovo.com.cn/index.php?s=/Home/Data/solution_list/cate_id/57.html"
-              onsubmit="return formchk();">
-            <img src="./resourcesList_files/535a417a1e831.jpg" width="26%" class="search_img">
-            <input type="text" name="title" id="title" class="pro_serach">
-            <input type="submit" value="检索" class="pro_bt">
-        </form>
-        <!--
-        <div class="uk-width-3-10" style="padding:0; width:26%;">
-            <img src="images/dx.jpg" width="100%" />
-        </div>
-        <div class="uk-width-7-10" style="width:69%; padding-left:5%; float:right;">
-            <form>
-            <input type="text" name="search" class="uk-width-7-10" style="width:67%; background:#eee; border:1px solid #CCC;padding:2px 0;" />
-            <button class="uk-width-3-10" style="width:30%; background-color:#5a5a5a; border:0; color:#fff; padding:2px 0;">检索</button>
-            </form>
-        </div>
-        -->
     </div>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/262/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
+    <div class="uk-grid uk-align-center width95">
+        <div class="uk-width-1-1 padding0">
+            <img src="${category.logo}" alt=""/>
+            <p class="produ_class">${category.name}</p>
+        </div>
+    </div>
+    <#list resources as resource>
+    <a href="${ctx}/web/resource?resourceId=${resource.id}"
        class="uk-grid uk-align-center width95" name="content">
         <div class="uk-width-2-10 padding0">
-            <img src="./resourcesList_files/5372e72973866.jpg" width="100%" class="pro_img" style="height: 80px;">
+            <img src="${resource.thumbnail}" width="100%" class="pro_img" style="height: 80px;">
         </div>
         <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">环境监察移动执法方案</p>
+            <p class="pro_p1">${resource.name}</p>
 
             <p class="pro_p2">
-
-                一、方案介绍
-
-
-                与日益严峻的环境形势和所承担的繁重环保任务相比,目前廊坊市环境监督管理中存在的问题：一是人手不足，难于应付日益增长的监督管理工作压力，执法手段和执法装备有待进一步提高；二是部分人员监管不力，执法不到位，执法人员素质有待进一步提高；三是环保执法人员对现场监管的内容还存在信息缺乏的情况，执法水平有待进一步提高。
-
-
-                环境监察信息化能力也建设相对滞后，现有系统仅为下发的污染源 </p>
-        </div>
-    </a>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/261/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="./resourcesList_files/5372e6e458b6d.jpg" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">两会无纸化解决方案</p>
-
-            <p class="pro_p2">
-
-                一、方案介绍
-
-
-                联想会议系统方案采用先进的网络技术技术，提供平板电脑、屏幕广播、网络影院文件传输等多种数据共享功能，，它代表着一种全新的会议方式，利用一套软件，在现有的平板设备上，实现主持人机对与会者机的广播等操作来统一地进行管理。
-
-
+                ${resource.intro}
             </p>
         </div>
     </a>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/260/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="./resourcesList_files/5372e6f43a38a.jpg" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">统计数据采集解决方案</p>
-
-            <p class="pro_p2">
-
-                一、项目背景：
-
-
-                第三次全国经济普查登记工作从2014年1月1日正式启动到3月31号结束。大约300万名普查人员将手持5 </p>
-        </div>
-    </a>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/259/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="./resourcesList_files/5372e6f97743c.jpg" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">新闻办移动解决方案</p>
-
-            <p class="pro_p2">
-
-                一、方案介绍
-
-
-                《国务院办公厅关于进一步加强政府信息公开回应社会关切提升政府公信力的意见》提出：依法实施政府信息公开是人民政府密切联系群众、转变政风的内在要求，是建设现代政府，提高政府公信力，稳定市场预期，保障公众知情权、参与权、监督权的重要举措。
-
-
-                随着互联网技术的迅猛发展和信息传播方式的深刻变革，社会公众对政府工作知情、参与和监督意识不断增强，对各级行政机关依法公开政府信息、及时 </p>
-        </div>
-    </a>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/258/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">工商执法解决方案（烽火星空）</p>
-
-            <p class="pro_p2">
-
-                一、方案介绍
-
-
-                移动工商解决方案是通过移动中间件移植的方式，将各级工商部门现有的基于Windows平台的商品监管、综合办公和工商执法应用移植到平板电脑上，并结合平板电脑的特点进行定制开发，实现重要商户/商品信息的备案和监管、日常工作处理以及一线人员移动执法等功能，提高工商行业的信息化建设水平和工作效率。
-
-            </p>
-        </div>
-    </a>
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/257/cate_id/57/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="./resourcesList_files/5372e75b01295.jpg" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">工商执法解决方案（航宇金信）</p>
-
-            <p class="pro_p2">
-
-                一、背景
-
-
-                针对工商监管过程中现场检查、异地办公等问题，结合工商监管管理业务，建设工商移动执法平台。
-
-
-                平台主要用于基础执法人员户外日常巡查、无照经营监管、异地经营监管、社区工作管理等日常业务工作，通过VPDN通道完成数据的上传与下载。
-
-            </p>
-        </div>
-    </a>
-
-    <form method="post" action="http://mia.lenovo.com.cn/index.php?s=/Home/Data/solution_list/cate_id/57.html">
-        <input type="hidden" name="more" value="ok">
-
-        <div class="uk-grid uk-align-center">
-            <button class="bt4" type="submit"><p style="font-size:24px;">查 看 更 多 <img
-                    src="./resourcesList_files/pre.png" width="20"></p></button>
-
-
-        </div>
-    </form>
-
+    </#list>
 </div>
-<!--
-	<div>
-    	<div class="top" style=" width:100%; margin-bottom:1em;">
-        	<img src="images/top.jpg" width="100%" />
-        </div>
-        
-        <div class="" style=" width:94%; margin:0 auto;">
-        	
-            <div class="dx_top" style="">
-                <div class="search_logo" style="width:25%; float:left; margin-right:10%;">
-                    <img src="images/dx.jpg" width="100%" />
-                </div>
-                    
-                <div class="search" style="float:right; width:65%;">
-                    <input type="text" name="search" class="sea_text" style="width:70%; background-color:#eee; border:1px solid #CCC;" />
-                    <button class="sea_bt" style="width:25%; margin:0; background-color:#5a5a5a; border:0; color:#fff;">检索</button>
-                </div>
-            </div>
-            
-            <div style="margin-top:1.5em;">
-            	<ul>
-                	<li></li>
-                </ul>
-            </div>
-            
-        </div>
-    </div>
--->
+
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $("a[name='content'] img").each(function () {

@@ -1,3 +1,4 @@
+<#assign ctx=request.contextPath>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,42 +22,30 @@
     </div>
     <!-- /头部 -->
 
+    <#list resources as resource>
     <!-- 主体 -->
     <div class="uk-grid uk-align-center width95">
         <div class="uk-width-1-1 padding0">
-            <p class="produ_class">大客户专属产品</p>
+            <p class="produ_class">${resource.categoryName}</p>
         </div>
     </div>
 
-    <a href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/179/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
+    <a href="${ctx}/web/product?resourceId=${resource.id}"
        class="uk-grid uk-align-center width95 margin_top10">
         <div class="uk-width-2-10 padding0">
-            <img src="./productIntro_files/70601153f615103254f.jpg" width="100%">
+            <img src="${resource.thumbnail}" width="100%">
         </div>
         <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">大客户专属A7-60</p>
+            <p class="pro_p1">${resource.name}</p>
 
             <p class="pro_p2">
+                ${resource.intro}
             </p>
         </div>
-    </a><a
-        href="http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/178/FromUserName/ouMyKt-u1q2TWL4PARmRXG4AzBY0.html"
-        class="uk-grid uk-align-center width95 margin_top10">
-    <div class="uk-width-2-10 padding0">
-        <img src="./productIntro_files/1080 1153f6133709f6c.jpg" width="100%">
-    </div>
-    <div class="uk-width-8-10 padding_left15">
-        <p class="pro_p1">大客户专属A10-80</p>
-
-        <p class="pro_p2">
-        </p>
-    </div>
+    </a>
+    </#list>
 </a>
 
-
-    <div class="uk-grid uk-align-cente" id="more" style="display:none;">
-        <button class="bt4"><p style="font-size:24px;">查 看 更 多 <img src="../asset/imgs/pre.png" width="20"></p></button>
-    </div>
 
 
 </div>
