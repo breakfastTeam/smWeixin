@@ -468,3 +468,6 @@
 	.color_pick li { float:left; margin-bottom:8px; margin-right:8px;}
 	.color_pick input { vertical-align:middle; width:13px !important; padding:0 !important; border:0 !important;}
 	.color_pick .pick {display:inline-block; width:55px; height:30px; line-height:30px; vertical-align:middle; border:1px solid #c3c3c3; cursor:pointer;}
+
+
+	#content img{cursor:pointer;}

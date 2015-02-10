@@ -65,16 +65,11 @@ public class WeixinController extends WeixinControllerSupport {
         if (content.equals("products")) {
             List<Article> articles = Lists.newArrayList();
             Category category = categoryRepository.findOneByType("products");
-            List<Resource> resources = resourceRepository.findByCategoryId(category.getId());
-            Article article = null;
-            for (Resource resource : resources) {
-                article = new Article();
-                article.setPicUrl(resource.getThumbnail());
-                article.setTitle(resource.getName());
-                article.setDescription(resource.getIntro());
-                article.setUrl(host+"/web/product?resourceId="+resource.getId());
-                articles.add(article);
-            }
+            Article article = new Article();
+            article.setPicUrl(category.getThumbnail());
+            article.setTitle("产品资料");
+            article.setUrl(host + "/web/productIntro");
+            articles.add(article);
             return new NewsMsg(articles);
         }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")){
             //解决方案、案例、demo

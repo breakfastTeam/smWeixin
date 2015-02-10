@@ -1,89 +1,52 @@
 <#assign ctx=request.contextPath>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 
-    <link type="text/css" rel="stylesheet" href="../asset/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="../asset/css/uikit.min.css">
-    <link type="text/css" rel="stylesheet" href="../asset/css/style.css">
     <title>解决方案列表</title>
 
-
+    <style>
+        .media img{
+            width:64px;
+            height:64px;
+        }
+    </style>
 </head>
 <body>
 
 
 <!-- 头部 -->
-
-
-<div class="uk-container uk-margin-bottom padding0">
-    <div class="uk-grid uk-align-center">
-        <div class="uk-width-1-1 padding0">
-            <img src="../asset/imgs/top.jpg" width="100%">
-        </div>
+<div class="container">
+    <div class="row">
+        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+    </div>
+    <div class="row" style="margin:30px 0px;">
+        <img src="${category.logo}" alt="" style="min-width:50px;max-width:80px;height:80px;"/>
+        <span class="label label-primary" style="margin-left:20px;font-size: 18px;">${category.name}</span>
     </div>
 
-
-    <!-- /头部 -->
-
-    <!-- 主体 -->
-
-
-    <div class="uk-grid uk-align-center width95">
-
-        <script type="text/javascript">
-            function formchk() {
-                var addform = document.seach;
-                if (addform.title.value == "") {
-                    alert("搜索内容不能为空!");
-                    addform.title.focus();   //用户名输入框获得焦点
-                    return false;   //不提交表单
-                }
-                return true;   //输入符合要求后执行表单提交操作
-            }
-        </script>
+    <div class="row">
+        <#list resources as resource>
+            <div class="media">
+                <div class="media-left">
+                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                        <img class="media-object" src="${resource.thumbnail}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                        <h4 class="media-heading">${resource.name}</h4>
+                    </a>
+                    <p>${resource.intro}</p>
+                </div>
+            </div>
+        </#list>
     </div>
-    <div class="uk-grid uk-align-center width95">
-        <div class="uk-width-1-1 padding0">
-            <img src="${category.logo}" alt=""/>
-            <p class="produ_class">${category.name}</p>
-        </div>
-    </div>
-    <#list resources as resource>
-    <a href="${ctx}/web/resource?resourceId=${resource.id}"
-       class="uk-grid uk-align-center width95" name="content">
-        <div class="uk-width-2-10 padding0">
-            <img src="${resource.thumbnail}" width="100%" class="pro_img" style="height: 80px;">
-        </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">${resource.name}</p>
-
-            <p class="pro_p2">
-                ${resource.intro}
-            </p>
-        </div>
-    </a>
-    </#list>
 </div>
-
-<script language="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $("a[name='content'] img").each(function () {
-            $(this).css("height", $(this).width());
-        });
-    });
-</script>
-
-
-<!-- /主体 -->
-
-<!-- 底部 -->
-<footer>
-
-</footer>
-<!-- /底部 -->
 
 </body>
 </html>
