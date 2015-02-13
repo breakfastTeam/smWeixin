@@ -1,80 +1,46 @@
 <#assign ctx=request.contextPath>
-<!DOCTYPE html>
-<!-- saved from url=(0108)http://mia.lenovo.com.cn/index.php?s=/Home/Data/detail/id/179/FromUserName/oA7ZTuJiWOlYkI5Wz8DsC_uyfnwU.html -->
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 
-    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <title>详细信息</title>
 
-    <link type="text/css" rel="stylesheet" href="./product_files/reset.css">
-    <link type="text/css" rel="stylesheet" href="./product_files/uikit.min.css">
-    <link type="text/css" rel="stylesheet" href="./product_files/style.css">
+    </head>
+    <body>
 
-    <script type="text/javascript" src="./product_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./product_files/jquery.raty.min.js"></script>
-
-    <title>详细信息</title>
-
-    <script type="text/javascript">
-        $(function () {
-            $(".confirm").click(function () {
-                if (confirm("确认执行该操作吗？")) {
-                    return true;
-                }
-                else return false;
-            })
-        })
-    </script>
-</head>
-<body>
-<bloack name="script">
-
-</bloack>
-
-
-<!-- 头部 -->
-
-<div class="uk-container uk-margin-bottom padding0">
-    <div class="uk-grid uk-align-center">
-        <div class="uk-width-1-1 padding0 produ_bg">
-            <p class="produ_title">${resource.categoryName}</p>
+    <!-- 头部 -->
+    <div class="container">
+        <div class="jumbotron">
+            <img src="${resource.banner}" alt="" style="position:absolute;left:0;top:0;height: 200px;width:100%;"/>
+            <div style="position:relative;z-index: 10;bottom: 10px;">
+                <h3>${resource.name}</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 80px;">
+            ${resource.content}
         </div>
     </div>
 
-    <!-- /头部 -->
+    <script>
+        $(document).ready(function () {
+            $("#content img").css("cursor", "pointer");
 
-    <!-- 主体 -->
-
-    <div class="uk-grid uk-align-center width95">
-        <div class="uk-width-1-1 padding10" id="content">
-            <img src="${resource.banner}" alt="" style="cursor: pointer;">
-            <p>
-                ${resource.content}
-            </p>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        $("#content img").css("cursor", "pointer");
-        $("#content img").click(function () {
-//            var viewUrl = "/index.php?s=/Home/Public/viewPic.html";
-//            location.href = viewUrl + "&src=" + $(this).attr("src");
         });
-        s
-    });
-</script>
+    </script>
 
 
-<!-- /主体 -->
+    <!-- /主体 -->
 
-<!-- 底部 -->
-<footer>
+    <!-- 底部 -->
+    <footer>
 
-</footer>
-<!-- /底部 -->
+    </footer>
+    <!-- /底部 -->
 
-</body>
-</html>
+    </body>
+    </html>

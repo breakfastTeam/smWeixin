@@ -13,3 +13,4 @@ node_modules/
 log.dir_IS_UNDEFINED/**
 .idea/**
 .idea/*
+upload/**

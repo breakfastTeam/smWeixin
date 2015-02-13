@@ -6,7 +6,8 @@ package com.sm.util;
 public class SmUtils {
 
     public static final String SEESION_USER_ID = "SEESION_USER_ID";
-    public static final String APP_ID = "APP_ID";
-    public static final String APP_AESKEY = "APP_AESKEY";
+    public static final String APP_ID = "wx1731870e864b376e";
+    public static final String APP_AESKEY = null;
+    public static final String APP_SECRET = "f411a20040455fd8412523065d585d9b";
 
 }

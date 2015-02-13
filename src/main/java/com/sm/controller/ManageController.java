@@ -282,6 +282,7 @@ public class ManageController {
     }
 
     @RequestMapping("video/save")
+    @ResponseBody
     public JsonResult videoSave(HttpServletRequest request) {
         JsonResult jsonResult = new JsonResult();
         Video video = new Video();

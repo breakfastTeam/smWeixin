@@ -7,7 +7,6 @@ import com.github.sd4324530.fastweixin.message.BaseMsg;
 import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
-import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.google.common.collect.Lists;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
@@ -40,7 +39,7 @@ public class WeixinController extends WeixinControllerSupport {
     private String host;
 
     private static final Logger log = LoggerFactory.getLogger(WeixinController.class);
-    private static final String TOKEN = "myToken";
+    private static final String TOKEN = "smweixin";
     //设置TOKEN，用于绑定微信服务器
     @Override
     protected String getToken() {
@@ -96,6 +95,9 @@ public class WeixinController extends WeixinControllerSupport {
                 articles.add(article);
             }
             return new NewsMsg(articles);
+        }else if(content.equals("about")){
+
+            return new TextMsg("关于").addLink("点击跳转", host+"/web/about");
         }
         return new TextMsg("服务器回复用户消息!");
     }
@@ -116,4 +118,6 @@ public class WeixinController extends WeixinControllerSupport {
         handles.add(new MyEventHandle());
         return handles;
     }
+
+
 }
