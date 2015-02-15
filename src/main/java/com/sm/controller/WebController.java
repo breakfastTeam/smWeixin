@@ -1,5 +1,7 @@
 package com.sm.controller;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
 import com.sm.entity.Video;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ez丶kkk on 15/2/7.
@@ -77,7 +80,20 @@ public class WebController {
         Category category = categoryRepository.findOneByType("products");
         List<Resource> resources = resourceRepository.findByCategoryId(category.getId());
         ModelAndView mv = new ModelAndView();
-        mv.addObject("resources", resources);
+        List<Resource> temp = null;
+        Map<String,List<Resource>> result = Maps.newHashMapWithExpectedSize(resources.size());
+        for (Resource resource : resources) {
+            String categoryName = resource.getCategoryName();
+            if (result.containsKey(categoryName)) {
+                temp = result.get(categoryName);
+                temp.add(resource);
+            }else{
+                temp = Lists.newArrayListWithExpectedSize(1);
+                temp.add(resource);
+                result.put(categoryName,temp);
+            }
+        }
+        mv.addObject("resultMap", result);
         mv.setViewName("productIntro");
         return mv;
     }

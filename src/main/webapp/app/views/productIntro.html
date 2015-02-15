@@ -19,28 +19,32 @@
     <div class="row">
         <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
-    <#list resources as resource>
-    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
-        <h3>${resource.categoryName}</h3>
-        <div class="line"></div>
-    </div>
-
-    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
-        <div class="media">
-            <div class="media-left">
-                <a href="${ctx}/web/product?resourceId=${resource.id}">
-                    <img class="media-object" src="${resource.thumbnail}" style="width:80px" alt="...">
-                </a>
-            </div>
-            <div class="media-body">
-                <a href="${ctx}/web/resource?resourceId=${resource.id}">
-                    <h4 class="media-heading">${resource.name}</h4>
-                </a>
-                <p>${resource.intro}</p>
+    <#if resultMap??>
+    <#list resultMap?keys as key>
+        <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+            <h3>${key}</h3>
+            <div class="line"></div>
+            <#assign resources=resultMap[key]>
+        </div>
+        <#list resources as resource>
+        <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+            <div class="media">
+                <div class="media-left">
+                    <a href="${ctx}/web/product?resourceId=${resource.id}">
+                        <img class="media-object" src="${resource.thumbnail}" style="width:80px" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                        <h4 class="media-heading">${resource.name}</h4>
+                    </a>
+                    <p>${resource.intro}</p>
+                </div>
             </div>
         </div>
-    </div>
+        </#list>
     </#list>
+    </#if>
 </div>
 
 </body>
