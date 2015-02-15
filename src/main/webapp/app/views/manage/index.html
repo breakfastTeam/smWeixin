@@ -89,6 +89,8 @@
         })
 
         $('#changePass').click(function(){
+            $('.active').removeClass('active');
+            $(this).parent('li').addClass('active');
             $('#content').load('${ctx}/manage/toChangePass');
         });
 
