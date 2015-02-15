@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class WeixinController extends WeixinControllerSupport {
     }
     //重写父类方法，处理对应的微信消息
     @Override
-    protected BaseMsg handleTextMsg(TextReqMsg msg) {
+    protected BaseMsg handleTextMsg(TextReqMsg msg){
         String content = msg.getContent();
         log.debug("用户发送到服务器的内容:{}", content);
         //产品资料
@@ -66,7 +68,7 @@ public class WeixinController extends WeixinControllerSupport {
             Category category = categoryRepository.findOneByType("products");
             Article article = new Article();
             article.setPicUrl(category.getThumbnail());
-            article.setTitle("产品资料");
+            article.setTitle(convertStr("产品资料"));
             article.setUrl(host + "/web/productIntro");
             articles.add(article);
             return new NewsMsg(articles);
@@ -119,5 +121,15 @@ public class WeixinController extends WeixinControllerSupport {
         return handles;
     }
 
-
+    private String convertStr(String str) {
+        try {
+            System.out.println(str);
+            String s = new String(str.getBytes("utf-8"), "utf-8");
+            System.out.println(s);
+            return s;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }

@@ -51,7 +51,7 @@ public abstract class WeixinControllerSupport extends WeixinSupport {
      * @throws ServletException 异常
      * @throws IOException      IO异常
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
     protected final String process(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
@@ -61,6 +61,9 @@ public abstract class WeixinControllerSupport extends WeixinSupport {
         if (!isLegal(request)) {
             return "";
         }
-        return processRequest(request);
+        String result = processRequest(request);
+        System.out.println(result);
+        System.out.println(response);
+        return result;
     }
 }

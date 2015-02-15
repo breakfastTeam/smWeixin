@@ -5,60 +5,43 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 
-    <link type="text/css" rel="stylesheet" href="../asset/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="../asset/css/uikit.min.css">
-    <link type="text/css" rel="stylesheet" href="../asset/css/style.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <title>产品资料</title>
-
+    <style>
+        .line{ height:1px; border-bottom:1px solid #ccc; overflow:hidden; }
+    </style>
 </head>
 <body>
 
+
 <!-- 头部 -->
-<div class="uk-container uk-margin-bottom padding0">
-    <div class="uk-grid uk-align-center">
-        <div class="uk-width-1-1 padding0">
-            <img src="../asset/imgs/top.jpg" width="100%">
-        </div>
+<div class="container">
+    <div class="row">
+        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
-    <!-- /头部 -->
-
     <#list resources as resource>
-    <!-- 主体 -->
-    <div class="uk-grid uk-align-center width95">
-        <div class="uk-width-1-1 padding0" style="margin-bottom: 20px;">
-            <p class="produ_class">${resource.categoryName}</p>
-        </div>
+    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+        <h3>${resource.categoryName}</h3>
+        <div class="line"></div>
     </div>
 
-    <a href="${ctx}/web/product?resourceId=${resource.id}"
-       class="uk-grid uk-align-center width95 margin_top10">
-        <div class="uk-width-2-10 padding0">
-            <img src="${resource.thumbnail}" width="100%">
+    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+        <div class="media">
+            <div class="media-left">
+                <a href="${ctx}/web/product?resourceId=${resource.id}">
+                    <img class="media-object" src="${resource.thumbnail}" style="width:80px" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                    <h4 class="media-heading">${resource.name}</h4>
+                </a>
+                <p>${resource.intro}</p>
+            </div>
         </div>
-        <div class="uk-width-8-10 padding_left15">
-            <p class="pro_p1">${resource.name}</p>
-
-            <p class="pro_p2">
-                ${resource.intro}
-            </p>
-        </div>
-    </a>
+    </div>
     </#list>
-</a>
-
-
-
 </div>
-
-
-<!-- /主体 -->
-
-<!-- 底部 -->
-<footer>
-
-</footer>
-<!-- /底部 -->
 
 </body>
 </html>

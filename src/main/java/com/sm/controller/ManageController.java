@@ -249,12 +249,28 @@ public class ManageController {
     public ModelAndView resourceAdd(@RequestParam Long categoryId,@RequestParam(required = false) Long resourceId) {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categoryId", categoryId);
+
+        Category category = categoryRepository.findOne(categoryId);
+        if (category.getType().equals("schemes")) {
+            Category casesCate = categoryRepository.findOneByType("cases");
+            Category demoCate = categoryRepository.findOneByType("demos");
+            if(casesCate!=null){
+                List<Resource> caseResources = resourceRepository.findByCategoryId(casesCate.getId());
+                mv.addObject("caseResources",caseResources);
+            }
+            if (demoCate != null) {
+                List<Resource> demoResources = resourceRepository.findByCategoryId(demoCate.getId());
+                mv.addObject("demoResources",demoResources);
+            }
+        }
+
         if (resourceId != null) {
             Resource resource = resourceRepository.findOne(resourceId);
             mv.addObject("resource", resource);
             mv.addObject("categoryName", resource.getCategoryName());
+
+
         }else if (categoryId != null) {
-            Category category = categoryRepository.findOne(categoryId);
             mv.addObject("categoryName", category.getName());
         }
         mv.setViewName("manage/resourceAdd");
