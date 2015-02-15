@@ -257,12 +257,20 @@ public class ManageController {
         if (category.getType().equals("schemes")) {
             List<Category> casesCate = categoryRepository.findByType("cases");
             List<Category> demoCate = categoryRepository.findByType("demos");
-            if(!CollectionUtils.isEmpty(casesCate)){
-                List<Resource> caseResources = resourceRepository.findByCategoryId(casesCate.get(0).getId());
-                mv.addObject("caseResources",caseResources);
+            if(!CollectionUtils.isEmpty(casesCate)) {
+                List<Long> ids = Lists.newArrayListWithExpectedSize(casesCate.size());
+                for (Category c : casesCate) {
+                    ids.add(c.getId());
+                }
+                List<Resource> caseResources = resourceRepository.findByCategoryIdIn(ids);
+                mv.addObject("caseResources", caseResources);
             }
             if (!CollectionUtils.isEmpty(demoCate)) {
-                List<Resource> demoResources = resourceRepository.findByCategoryId(demoCate.get(0).getId());
+                List<Long> ids = Lists.newArrayListWithExpectedSize(casesCate.size());
+                for (Category c : demoCate) {
+                    ids.add(c.getId());
+                }
+                List<Resource> demoResources = resourceRepository.findByCategoryIdIn(ids);
                 mv.addObject("demoResources",demoResources);
             }
         }
