@@ -41,8 +41,8 @@
                 $('#content').load('${ctx}/manage/product/view?resourceId='+resourceId);
             }else{
                 $.post('${ctx}/manage/product/delete',{resourceId:resourceId},function(){
-                    $('#findresource').trigger('click');
                     $.mhtMsg('操作成功!');
+                    $('#content').load('${ctx}/manage/products?category=products');
                 })
             }
         })
