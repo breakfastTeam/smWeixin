@@ -8,14 +8,12 @@
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../asset/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/uikit.min.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/style.css">
 
     <title>在线视频</title>
-    <style>
-        .media img{
-            width:64px;
-            height:64px;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -25,21 +23,17 @@
         <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
 
-    <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
-        <#list videos as video>
-            <div class="media">
-                <div class="media-left">
-                    <a href="${ctx}/web/video?videoId=${video.id}">
-                        <img class="media-object" src="${video.logo}" alt="...">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="${ctx}/web/video?videoId=${video.id}">
-                        <h4 class="media-heading">${video.name}</h4>
-                    </a>
-                </div>
-            </div>
-        </#list>
+    <div class="uk-grid uk-align-center padding10" id="content">
+        <ul class="padding0 video" style="width:100%;">
+            <#list videos as video>
+            <li class="uk-width-1-1">
+                <a href="${ctx}/web/video?videoId=${video.id}">
+                    <img src="${video.logo}" width="100%">
+                    <p class="title1" style="font-size:16px; margin-top:4px;">${video.name}</p>
+                </a>
+            </li>
+            </#list>
+        </ul>
     </div>
 </div>
 

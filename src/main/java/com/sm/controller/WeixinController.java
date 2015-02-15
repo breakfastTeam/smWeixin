@@ -68,7 +68,7 @@ public class WeixinController extends WeixinControllerSupport {
             Category category = categoryRepository.findOneByType("products");
             Article article = new Article();
             article.setPicUrl(category.getThumbnail());
-            article.setTitle(convertStr("产品资料"));
+            article.setTitle("产品资料");
             article.setUrl(host + "/web/productIntro");
             articles.add(article);
             return new NewsMsg(articles);
@@ -121,15 +121,4 @@ public class WeixinController extends WeixinControllerSupport {
         return handles;
     }
 
-    private String convertStr(String str) {
-        try {
-            System.out.println(str);
-            String s = new String(str.getBytes("utf-8"), "utf-8");
-            System.out.println(s);
-            return s;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
 }

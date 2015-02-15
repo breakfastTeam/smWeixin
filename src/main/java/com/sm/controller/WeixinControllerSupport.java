@@ -62,8 +62,6 @@ public abstract class WeixinControllerSupport extends WeixinSupport {
             return "";
         }
         String result = processRequest(request);
-        System.out.println(result);
-        System.out.println(response);
         return result;
     }
 }
