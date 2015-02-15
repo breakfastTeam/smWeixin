@@ -12,5 +12,4 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     List<Category> findByType(String category);
 
-    Category findOneByType(String category);
 }

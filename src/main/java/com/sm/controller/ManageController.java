@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -79,9 +80,9 @@ public class ManageController {
     @RequestMapping("products")
     public ModelAndView products(@RequestParam String category) {
         ModelAndView mv = new ModelAndView();
-        Category category1 = categoryRepository.findOneByType(category);
-        if (category1 != null) {
-            mv.addObject("categoryId",category1.getId());
+        List<Category> category1 = categoryRepository.findByType(category);
+        if (category1 != null && category1.size()>0) {
+            mv.addObject("categoryId",category1.get(0).getId());
         }
         mv.setViewName("manage/products");
         return mv;
@@ -254,14 +255,14 @@ public class ManageController {
 
         Category category = categoryRepository.findOne(categoryId);
         if (category.getType().equals("schemes")) {
-            Category casesCate = categoryRepository.findOneByType("cases");
-            Category demoCate = categoryRepository.findOneByType("demos");
-            if(casesCate!=null){
-                List<Resource> caseResources = resourceRepository.findByCategoryId(casesCate.getId());
+            List<Category> casesCate = categoryRepository.findByType("cases");
+            List<Category> demoCate = categoryRepository.findByType("demos");
+            if(!CollectionUtils.isEmpty(casesCate)){
+                List<Resource> caseResources = resourceRepository.findByCategoryId(casesCate.get(0).getId());
                 mv.addObject("caseResources",caseResources);
             }
-            if (demoCate != null) {
-                List<Resource> demoResources = resourceRepository.findByCategoryId(demoCate.getId());
+            if (!CollectionUtils.isEmpty(demoCate)) {
+                List<Resource> demoResources = resourceRepository.findByCategoryId(demoCate.get(0).getId());
                 mv.addObject("demoResources",demoResources);
             }
         }

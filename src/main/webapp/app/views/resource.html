@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-
+    <link rel="stylesheet" href="../asset/css/uikit.min.css"/>
     <title>详细信息</title>
 
 </head>
@@ -16,13 +16,13 @@
 <div class="container">
 <div class="jumbotron">
     <img src="${resource.banner}" alt="" style="position:absolute;left:0;top:0;height: 200px;width:100%;"/>
-    <div style="position:relative;z-index: 10;bottom: -20px;">
-        <h3 style="color:#FFF;">${resource.name}</h3>
+    <div style="position:relative;z-index: 10;bottom: -40px;">
+        <h2 style="color:#FFF;margin-top:50px;">${resource.name}</h2>
     </div>
 </div>
 <div class="clearfix"></div>
     <div class="container">
-        <div class="row" style="margin-top: 60px;">
+        <div class="row" id="content" style="margin-top: 50px;">
             ${resource.content}
             <#if resource.refCase??||resource.refDemo??>
             <div class="well">
@@ -34,10 +34,11 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $("#content img").css("cursor", "pointer");
+<script src="../asset/js/jquery.min.js"></script>
 
+<script>
+    $(document).ready(function(){
+        $("#content img").css("cursor","pointer");
     });
 </script>
 

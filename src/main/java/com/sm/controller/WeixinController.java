@@ -19,12 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -65,13 +67,16 @@ public class WeixinController extends WeixinControllerSupport {
         //产品资料
         if (content.equals("products")) {
             List<Article> articles = Lists.newArrayList();
-            Category category = categoryRepository.findOneByType("products");
-            Article article = new Article();
-            article.setPicUrl(category.getThumbnail());
-            article.setTitle("产品资料");
-            article.setUrl(host + "/web/productIntro");
-            articles.add(article);
-            return new NewsMsg(articles);
+            List<Category> category = categoryRepository.findByType("products");
+            if (!CollectionUtils.isEmpty(category)) {
+                Article article = new Article();
+                article.setPicUrl(category.get(0).getThumbnail());
+                article.setTitle("产品资料");
+                article.setUrl(host + "/web/productIntro");
+                article.setDescription("点击查看更多产品资料");
+                articles.add(article);
+                return new NewsMsg(articles);
+            }
         }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")){
             //解决方案、案例、demo
             List<Category> categorys = categoryRepository.findByType(content);
@@ -89,11 +94,13 @@ public class WeixinController extends WeixinControllerSupport {
             List<Video> videos = videoRepository.findAll();
             List<Article> articles = Lists.newArrayList();
             Article article = null;
-            for(Video video:videos){
+            Video video = videos.get(0);
+            if (video != null) {
                 article = new Article();
                 article.setPicUrl(video.getLogo());
                 article.setTitle(video.getName());
-                article.setUrl(host+"/web/videoList");
+                article.setUrl(host + "/web/videoList");
+                article.setDescription("点击查看更多在线视频");
                 articles.add(article);
             }
             return new NewsMsg(articles);

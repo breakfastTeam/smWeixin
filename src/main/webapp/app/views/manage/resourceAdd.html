@@ -43,6 +43,7 @@
             <label for="refCase" class="col-sm-4 control-label">关联案例：</label>
             <div class="col-sm-8">
                 <select id="refCase" name="refCase">
+                    <optiion value="">请选择</optiion>
                     <#list caseResources![] as case>
                         <option value="${case.id}" <#if resource.refCase==case.id>selected="selected"</#if>>${case.name}</option>
                     </#list>
@@ -53,6 +54,7 @@
             <label for="refDemo" class="col-sm-4 control-label">关联DEMO：</label>
             <div class="col-sm-8">
                 <select id="refDemo" name="refDemo">
+                    <optiion value="">请选择</optiion>
                     <#list demoResources![] as demo>
                         <option value="${demo.id}" <#if resource.refCase==demo.id>selected="selected"</#if>>${demo.name}</option>
                     </#list>
@@ -70,9 +72,7 @@
             <label for="container" class="col-sm-4 control-label">详情：</label>
             <div class="col-sm-8">
                 <!-- 加载编辑器的容器 -->
-                <script id="container" name="content" type="text/plain" style="width:640px;height:100px;">
-                    ${(resource.content)!}
-                </script>
+                <script id="container" name="content" type="text/plain" style="width:640px;height:100px;">${(resource.content)!}</script>
             </div>
         </div>
         <div class="form-group">

@@ -24,10 +24,11 @@
     <div class="row">
         <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
-    <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
-        <img src="${category.logo}" alt="" style="min-width:50px;max-width:80px;height:80px;"/>
-        <span class="label label-primary" style="margin-left:20px;font-size: 18px;">${category.name}</span>
-    </div>
+    <!---->
+    <!--<div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">-->
+        <!--<img src="${category.logo}" alt="" style="min-width:50px;max-width:80px;height:80px;"/>-->
+        <!--<span class="label label-primary" style="margin-left:20px;font-size: 18px;">${category.name}</span>-->
+    <!--</div>-->
 
     <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
         <#list resources as resource>
@@ -41,7 +42,7 @@
                     <a href="${ctx}/web/resource?resourceId=${resource.id}">
                         <h4 class="media-heading">${resource.name}</h4>
                     </a>
-                    <p style="width:100%;text-overflow:ellipsis;">${resource.intro}</p>
+                    <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:38px;">${resource.intro}</p>
                 </div>
             </div>
         </#list>

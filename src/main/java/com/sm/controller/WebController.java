@@ -11,6 +11,7 @@ import com.sm.repository.UserRepository;
 import com.sm.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,23 +78,25 @@ public class WebController {
 
     @RequestMapping("productIntro")
     public ModelAndView productIntro() {
-        Category category = categoryRepository.findOneByType("products");
-        List<Resource> resources = resourceRepository.findByCategoryId(category.getId());
         ModelAndView mv = new ModelAndView();
-        List<Resource> temp = null;
-        Map<String,List<Resource>> result = Maps.newHashMapWithExpectedSize(resources.size());
-        for (Resource resource : resources) {
-            String categoryName = resource.getCategoryName();
-            if (result.containsKey(categoryName)) {
-                temp = result.get(categoryName);
-                temp.add(resource);
-            }else{
-                temp = Lists.newArrayListWithExpectedSize(1);
-                temp.add(resource);
-                result.put(categoryName,temp);
+        List<Category> category = categoryRepository.findByType("products");
+        if (!CollectionUtils.isEmpty(category)) {
+            List<Resource> resources = resourceRepository.findByCategoryId(category.get(0).getId());
+            List<Resource> temp = null;
+            Map<String,List<Resource>> result = Maps.newHashMapWithExpectedSize(resources.size());
+            for (Resource resource : resources) {
+                String categoryName = resource.getCategoryName();
+                if (result.containsKey(categoryName)) {
+                    temp = result.get(categoryName);
+                    temp.add(resource);
+                }else{
+                    temp = Lists.newArrayListWithExpectedSize(1);
+                    temp.add(resource);
+                    result.put(categoryName,temp);
+                }
             }
+            mv.addObject("resultMap", result);
         }
-        mv.addObject("resultMap", result);
         mv.setViewName("productIntro");
         return mv;
     }
