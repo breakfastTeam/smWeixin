@@ -21,6 +21,8 @@ public class Resource {
     @Column(name="thumbnail")       private String thumbnail;
     @Column(name="intro")           private String intro;
     @Column(name="content")         private String content;
+    @Column(name="ref_case")        private String refCase;
+    @Column(name="ref_demo")        private String refDemo;
     @Column(name="created")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime created;
@@ -90,6 +92,22 @@ public class Resource {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getRefCase() {
+        return refCase;
+    }
+
+    public void setRefCase(String refCase) {
+        this.refCase = refCase;
+    }
+
+    public String getRefDemo() {
+        return refDemo;
+    }
+
+    public void setRefDemo(String refDemo) {
+        this.refDemo = refDemo;
     }
 
     public DateTime getCreated() {

@@ -142,6 +142,8 @@ public class ManageController {
         resource.setName(request.getParameter("name"));
         resource.setIntro(request.getParameter("intro"));
         resource.setContent(request.getParameter("content"));
+        resource.setRefCase(request.getParameter("refCase"));
+        resource.setRefDemo(request.getParameter("refDemo"));
         DateTime now = DateTime.now();
         resource.setCreated(now);
         resource.setUpdated(now);
@@ -273,6 +275,7 @@ public class ManageController {
         }else if (categoryId != null) {
             mv.addObject("categoryName", category.getName());
         }
+        mv.addObject("categoryType", category.getType());
         mv.setViewName("manage/resourceAdd");
         return mv;
     }
