@@ -55,15 +55,9 @@
 
     <div class="uk-grid uk-align-center margin_top5">
         <div class="uk-width-1-1 padding10">
-            <video id="example_video_1" class="video-js vjs-default-skin" controls="" preload="none" width="100%"
-                   data-setup="{}">
-                <source src="${video.url}" type="video/mp4">
-                <!--<track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>-->
-                <!--&lt;!&ndash; Tracks need an ending tag thanks to IE9 &ndash;&gt;-->
-                <!--<track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>-->
-                <!-- Tracks need an ending tag thanks to IE9 -->
+            <video src="${video.url}" controls="controls">
+                您的浏览器不支持 video 。
             </video>
-            <p></p>
 
             <h3>
                 视频大小：${video.size}MB &nbsp; &nbsp; &nbsp;视频时长：${video.length}

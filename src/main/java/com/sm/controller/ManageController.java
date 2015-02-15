@@ -241,9 +241,9 @@ public class ManageController {
         }else {
             resources = resourceRepository.findByCategoryId(categoryId);
         }
+        mv.setViewName("manage/resourceList");
         mv.addObject("resources", resources);
         mv.addObject("categoryId", categoryId);
-        mv.setViewName("manage/resourceList");
         return mv;
     }
 

@@ -7,82 +7,41 @@
 
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 
-    <link type="text/css" rel="stylesheet" href="./videoList_files/reset.css">
-    <link type="text/css" rel="stylesheet" href="./videoList_files/uikit.min.css">
-    <link type="text/css" rel="stylesheet" href="./videoList_files/style.css">
-
-    <script type="text/javascript" src="./videoList_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./videoList_files/jquery.raty.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 
     <title>在线视频</title>
-
-    <script type="text/javascript">
-        $(function () {
-            $(".confirm").click(function () {
-                if (confirm("确认执行该操作吗？")) {
-                    return true;
-                }
-                else return false;
-            })
-        })
-    </script>
+    <style>
+        .media img{
+            width:64px;
+            height:64px;
+        }
+    </style>
 </head>
-<body onload="autoimg()">
-<bloack name="script">
-
-</bloack>
-
+<body>
 
 <!-- 头部 -->
-
-
-<div class="uk-container uk-margin-bottom padding0">
-    <div class="uk-grid uk-align-center">
-        <div class="uk-width-1-1 padding0">
-            <img src="../asset/imgs/top.jpg" width="100%">
-        </div>
+<div class="container">
+    <div class="row">
+        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
 
-
-    <!-- /头部 -->
-
-    <!-- 主体 -->
-<#list videos as video>
-    <div class="uk-grid uk-align-center padding10" id="content">
-        <ul class="padding0 video" style="width:100%;">
-            <li class="uk-width-1-1">
-                <a href="${ctx}/web/video?videoId=${video.id}">
-                    <img src="${video.logo}" width="100%">
-
-                    <p class="title1" style="font-size:16px; margin-top:4px;">${video.name}</p>
-                </a>
-            </li>
-        </ul>
+    <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
+        <#list videos as video>
+            <div class="media">
+                <div class="media-left">
+                    <a href="${ctx}/web/video?videoId=${video.id}">
+                        <img class="media-object" src="${video.logo}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="${ctx}/web/video?videoId=${video.id}">
+                        <h4 class="media-heading">${video.name}</h4>
+                    </a>
+                </div>
+            </div>
+        </#list>
     </div>
-</#list>
 </div>
-
-<!--
-<script>
-	function autoimg() {
-			var obj = document.getElementById("content").getElementsByTagName("img");
-			if(obj[0].height!=0){
-				for (var i = 1; i < obj.length; i++) {
-						obj[i].style.height=obj[0].height+'px';
-					}
-			}
-		}
-</script>
--->
-
-
-<!-- /主体 -->
-
-<!-- 底部 -->
-<footer>
-
-</footer>
-<!-- /底部 -->
 
 </body>
 </html>
