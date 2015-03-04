@@ -11,8 +11,8 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://121.42.43.189:3306/sm_weixin?characterEncoding=utf-8"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.max_fetch_depth" value="3"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
             <property name="jadira.usertype.autoRegisterUserTypes" value="true"/>
         </properties>
     </persistence-unit>
