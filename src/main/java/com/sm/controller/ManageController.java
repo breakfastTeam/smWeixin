@@ -100,11 +100,16 @@ public class ManageController {
     }
 
     @RequestMapping(value = {"/product/view","/product/add"})
-    public ModelAndView productsOpt(@RequestParam(required = false) Long resourceId) {
+    public ModelAndView productsOpt(@RequestParam(required = false) Long resourceId,
+                                    @RequestParam(required = false) Long categoryId) {
         ModelAndView mv = new ModelAndView();
         if (resourceId != null) {
             Resource resource = resourceRepository.findOne(resourceId);
             mv.addObject("resource", resource);
+            mv.addObject("categoryId", resource.getCategoryId());
+        }
+        if (categoryId != null) {
+            mv.addObject("categoryId", categoryId);
         }
         mv.setViewName("manage/productsAdd");
         return mv;

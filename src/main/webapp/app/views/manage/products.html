@@ -36,7 +36,7 @@
         })
 
         $('#addProduct').click(function(){
-            $('#content').load('${ctx}/manage/product/add');
+            $('#content').load('${ctx}/manage/product/add?categoryId=${categoryId!}');
             return false;
         })
 
