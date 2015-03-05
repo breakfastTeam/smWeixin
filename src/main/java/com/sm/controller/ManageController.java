@@ -83,6 +83,17 @@ public class ManageController {
         List<Category> category1 = categoryRepository.findByType(category);
         if (category1 != null && category1.size()>0) {
             mv.addObject("categoryId",category1.get(0).getId());
+        }else{
+            DateTime now = DateTime.now();
+            Category c = new Category();
+            c.setName("产品");
+            c.setLogo("");
+            c.setThumbnail("");
+            c.setType(category);
+            c.setCreated(now);
+            c.setUpdated(now);
+            c = categoryRepository.saveAndFlush(c);
+            mv.addObject("categoryId",c.getId());
         }
         mv.setViewName("manage/products");
         return mv;
