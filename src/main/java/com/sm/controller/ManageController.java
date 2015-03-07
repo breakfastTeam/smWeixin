@@ -53,6 +53,7 @@ public class ManageController {
     private VideoRepository videoRepository;
     @Value("#{configProperties['host']}")
     private String host;
+    private String separator = "/";
 
     @RequestMapping(value = {"/","/login"}, method= RequestMethod.GET)
     public String login() {
@@ -428,9 +429,9 @@ public class ManageController {
 
         String dirname = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String upload = httpServletRequest.getSession().getServletContext().getRealPath("upload");
-        String filePath=dirname+File.separator+ CommonUtils.genUUID()+fileSuffix;
+        String filePath=dirname+separator+ CommonUtils.genUUID()+fileSuffix;
 
-        File targetFile = new File(upload+File.separator+filePath);
+        File targetFile = new File(upload+separator+filePath);
         if(!targetFile.exists()){
             targetFile.mkdirs();
         }
@@ -439,15 +440,15 @@ public class ManageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return host+File.separator+"upload"+File.separator+filePath;
+        return host+ separator +"upload"+separator+filePath;
     }
 
     private String _saveFileWithName(MultipartFile file,HttpServletRequest httpServletRequest,String fileName) {
         String dirname = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String upload = httpServletRequest.getSession().getServletContext().getRealPath("upload");
-        String filePath=dirname+File.separator+ fileName;
+        String filePath=dirname+separator+ fileName;
 
-        File targetFile = new File(upload+File.separator+filePath);
+        File targetFile = new File(upload+separator+filePath);
         if(!targetFile.exists()){
             targetFile.mkdirs();
         }
@@ -456,6 +457,6 @@ public class ManageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return host+File.separator+"upload"+File.separator+filePath;
+        return host+separator+"upload"+separator+filePath;
     }
 }

@@ -71,13 +71,16 @@ public class WeixinController extends WeixinControllerSupport {
             List<Article> articles = Lists.newArrayList();
             List<Category> category = categoryRepository.findByType("products");
             if (!CollectionUtils.isEmpty(category)) {
-                Article article = new Article();
-                article.setPicUrl(category.get(0).getThumbnail());
-                article.setTitle("产品资料");
-                article.setUrl(host + "/web/productIntro");
-                article.setDescription("点击查看更多产品资料");
-                articles.add(article);
-                return new NewsMsg(articles);
+                List<Resource> resources = resourceRepository.findByCategoryId(category.get(0).getId());
+                if(!CollectionUtils.isEmpty(resources)){
+                    Article article = new Article();
+                    article.setPicUrl(resources.get(0).getThumbnail());
+                    article.setTitle("产品资料");
+                    article.setUrl(host + "/web/productIntro");
+                    article.setDescription("点击查看更多产品资料");
+                    articles.add(article);
+                    return new NewsMsg(articles);
+                }
             }
         }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")){
             //解决方案、案例、demo
@@ -121,13 +124,16 @@ public class WeixinController extends WeixinControllerSupport {
             List<Article> articles = Lists.newArrayList();
             List<Category> category = categoryRepository.findByType("products");
             if (!CollectionUtils.isEmpty(category)) {
-                Article article = new Article();
-                article.setPicUrl(category.get(0).getThumbnail());
-                article.setTitle("产品资料");
-                article.setUrl(host + "/web/productIntro");
-                article.setDescription("点击查看更多产品资料");
-                articles.add(article);
-                return new NewsMsg(articles);
+                List<Resource> resources = resourceRepository.findByCategoryId(category.get(0).getId());
+                if(!CollectionUtils.isEmpty(resources)){
+                    Article article = new Article();
+                    article.setPicUrl(resources.get(0).getThumbnail());
+                    article.setTitle("产品资料");
+                    article.setUrl(host + "/web/productIntro");
+                    article.setDescription("点击查看更多产品资料");
+                    articles.add(article);
+                    return new NewsMsg(articles);
+                }
             }
         }else if(keyEvent.equals("schemes")||keyEvent.equals("cases")||keyEvent.equals("demos")){
             //解决方案、案例、demo
