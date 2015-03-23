@@ -13,7 +13,21 @@
     <link type="text/css" rel="stylesheet" href="../asset/css/style.css">
 
     <title>在线视频</title>
+    <style>
+        .thumbnail {
+            display: block;
+            padding: 4px;
+            margin-bottom: 20px;
+            line-height: 1.42857143;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            -webkit-transition: border .2s ease-in-out;
+            -o-transition: border .2s ease-in-out;
+            transition: border .2s ease-in-out;
+        }
 
+    </style>
 </head>
 <body>
 
@@ -23,14 +37,19 @@
         <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
     </div>
 
-    <div class="uk-grid uk-align-center padding10" style="margin-top:30px;" id="content">
+    <div class="uk-grid uk-align-center padding10" style="margin-top:20px;padding:0px;" id="content">
         <ul class="padding0 video" style="width:100%;">
             <#list videos as video>
             <li class="uk-width-1-1">
+                <div class="thumbnail">
                 <a href="${ctx}/web/video?videoId=${video.id}">
                     <img src="${video.logo}" width="100%">
-                    <p class="title1" style="font-size:16px; margin-top:4px;">${video.name}</p>
+
                 </a>
+                    <div class="title1" style="font-size:16px; margin-top:-41px;margin-bottom: -5px;z-index:10;background-color: rgba(0,0,0,.5);color:#ffffff;position: relative;">
+                        <p style = "padding:10px;">${video.name}</p>
+                    </div>
+                </div>
             </li>
             </#list>
         </ul>
