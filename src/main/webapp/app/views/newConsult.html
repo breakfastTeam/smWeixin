@@ -1,0 +1,110 @@
+<#assign ctx=request.contextPath>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <title>我要咨询</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<div class="container">
+    <div class="row">
+        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+    </div>
+
+    <div class="container" style="margin-top:10px;">
+        <form id="consultForm" class="form-horizontal" action="${ctx!}/web/newConsultPost" method="post">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            基本信息
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">姓名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="userName" class="form-control" id="inputEmail3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">电话：</label>
+                                <div class="col-sm-10">
+                                    <input ype="text" name="mobile" class="form-control" id="mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">邮箱：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="email" name="email">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            咨询内容
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                            <div class="form-group">
+                                <label for="scheme" class="col-sm-2 control-label">方案名称：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="scheme" name="scheme">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="intro" class="col-sm-2 control-label">问题描述：</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="intro" name="intro"></textarea>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-danger btn-block">
+        </form>
+    </div>
+
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="${ctx}/asset/js/jquery.form.js"></script>
+<script>
+    $(function(){
+        $('#consultForm').submit(function(e){
+            e.preventDefault();
+            var url = $(this).attr('action'), data = {};
+            $('#consultForm input:text,#consultForm textarea').each(function(i,v){
+                var that= $(v);
+                data[that.attr('name')] = that.val();
+            });
+
+            $.post(url, data, function(res){
+                if(res.success()){
+                    alert('提交成功!');
+                }else{
+                    alert('请完整填写数据重新提交!');
+                }
+            });
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

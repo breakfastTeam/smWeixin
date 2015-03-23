@@ -136,19 +136,29 @@ public class WeixinController extends WeixinControllerSupport{
                     return new NewsMsg(articles);
                 }
             }
-        }else if(keyEvent.equals("schemes")||keyEvent.equals("cases")||keyEvent.equals("demos")){
+        }else if(keyEvent.equals("schemes")||keyEvent.equals("cases")||keyEvent.equals("demos")) {
             //解决方案、案例、demo
+            String name = "";
+            if(keyEvent.equals("schemes")){
+                name = "解决方案";
+            }else if(keyEvent.equals("schemes")){
+                name = "案例";
+            }else{
+                name = "demo";
+            }
             List<Category> categorys = categoryRepository.findByType(keyEvent);
             List<Article> articles = Lists.newArrayList();
             Article article = null;
-            for(Category category:categorys){
+            if(!CollectionUtils.isEmpty(categorys)) {
+                Category category = categorys.get(0);
                 article = new Article();
                 article.setPicUrl(category.getThumbnail());
-                article.setTitle(category.getName());
-                article.setUrl(host+"/web/resourceList?categoryId="+category.getId());
+                article.setTitle(name);
+                article.setUrl(host + "/web/resourceList");
+                article.setDescription("点击查看更多" + name);
                 articles.add(article);
+                return new NewsMsg(articles);
             }
-            return new NewsMsg(articles);
         }else if(keyEvent.equals("videos")){
             List<Video> videos = videoRepository.findAll();
             List<Article> articles = Lists.newArrayList();

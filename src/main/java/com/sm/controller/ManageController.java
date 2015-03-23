@@ -2,6 +2,7 @@ package com.sm.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
 import com.sm.entity.User;
@@ -35,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Ez丶kkk on 15/2/8.
@@ -275,7 +277,7 @@ public class ManageController {
             List<Category> casesCate = categoryRepository.findByType("cases");
             List<Category> demoCate = categoryRepository.findByType("demos");
             if(!CollectionUtils.isEmpty(casesCate)) {
-                List<Long> ids = Lists.newArrayListWithExpectedSize(casesCate.size());
+                Set<Long> ids = Sets.newHashSetWithExpectedSize(casesCate.size());
                 for (Category c : casesCate) {
                     ids.add(c.getId());
                 }
@@ -283,12 +285,12 @@ public class ManageController {
                 mv.addObject("caseResources", caseResources);
             }
             if (!CollectionUtils.isEmpty(demoCate)) {
-                List<Long> ids = Lists.newArrayListWithExpectedSize(casesCate.size());
+                Set<Long> ids = Sets.newHashSetWithExpectedSize(casesCate.size());
                 for (Category c : demoCate) {
                     ids.add(c.getId());
                 }
                 List<Resource> demoResources = resourceRepository.findByCategoryIdIn(ids);
-                mv.addObject("demoResources",demoResources);
+                mv.addObject("demoResources", demoResources);
             }
         }
 

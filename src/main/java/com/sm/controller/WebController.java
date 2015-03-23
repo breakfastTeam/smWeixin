@@ -1,19 +1,22 @@
 package com.sm.controller;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.base.Function;
+import com.google.common.collect.*;
 import com.sm.entity.Category;
+import com.sm.entity.Consult;
 import com.sm.entity.Resource;
 import com.sm.entity.Video;
 import com.sm.repository.CategoryRepository;
+import com.sm.repository.ConsultRepository;
 import com.sm.repository.ResourceRepository;
-import com.sm.repository.UserRepository;
 import com.sm.repository.VideoRepository;
+import com.sm.util.JsonResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -32,6 +35,8 @@ public class WebController {
     private CategoryRepository categoryRepository;
     @Autowired
     private VideoRepository videoRepository;
+    @Autowired
+    private ConsultRepository consultRepository;
 
     @RequestMapping(value={"/","/about"})
     public String index() {
@@ -39,12 +44,25 @@ public class WebController {
     }
 
     @RequestMapping("resourceList")
-    public ModelAndView resourceList(@RequestParam Long categoryId) {
-        Category category = categoryRepository.findOne(categoryId);
-        List resources = resourceRepository.findByCategoryId(category.getId());
+    public ModelAndView resourceList() {
         ModelAndView mv = new ModelAndView();
-        mv.addObject("resources", resources);
-        mv.addObject("category", category);
+        List<Category> categorys = categoryRepository.findByTypeNot("products");
+
+        if (!CollectionUtils.isEmpty(categorys)) {
+            final Map<Long,String> cateMap = Maps.newHashMapWithExpectedSize(categorys.size());
+
+            for (Category cate : categorys) {
+                cateMap.put(cate.getId(), cate.getName());
+            }
+
+            Multimap<String, Resource> multiMap = ArrayListMultimap.create();
+            List<Resource> resources = resourceRepository.findByCategoryIdIn(cateMap.keySet());
+            for (Resource resource : resources) {
+                multiMap.put(cateMap.get(resource.getCategoryId()), resource);
+            }
+
+            mv.addObject("resultMap", multiMap);
+        }
         mv.setViewName("resourcesList");
         return mv;
     }
@@ -118,5 +136,19 @@ public class WebController {
     @RequestMapping("news")
     public String news() {
         return "news";
+    }
+
+    @RequestMapping(value = "newConsult", method = RequestMethod.GET)
+    public String newConsult() {
+        return "newConsult";
+    }
+
+    @RequestMapping(value = "newConsultPost", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult newConsultPost(@ModelAttribute Consult consult) {
+        JsonResult result = new JsonResult();
+        Consult con = consultRepository.save(consult);
+        result.setSuccess(null != con.getId());
+        return result;
     }
 }

@@ -12,4 +12,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     List<Category> findByType(String category);
 
+    List<Category> findByTypeNot(String category);
+
 }

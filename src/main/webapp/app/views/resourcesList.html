@@ -31,21 +31,32 @@
     <!--</div>-->
 
     <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
-        <#list resources as resource>
-            <div class="media">
-                <div class="media-left">
-                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
-                        <img class="media-object" src="${resource.thumbnail}" alt="...">
-                    </a>
+        <#if resultMap??>
+            <#list resultMap.keySet() as key>
+                <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+                    <h3>${key}</h3>
+                    <div class="line"></div>
+                    <#assign resources=resultMap.get(key)>
                 </div>
-                <div class="media-body">
-                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
-                        <h4 class="media-heading">${resource.name}</h4>
-                    </a>
-                    <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:38px;">${resource.intro}</p>
-                </div>
-            </div>
-        </#list>
+                <#list resources as resource>
+                    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                    <img class="media-object" src="${resource.thumbnail}" style="width:80px" alt="...">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                    <h4 class="media-heading">${resource.name}</h4>
+                                </a>
+                                <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:38px;">${resource.intro}</p>
+                            </div>
+                        </div>
+                    </div>
+                </#list>
+            </#list>
+        </#if>
     </div>
 </div>
 
