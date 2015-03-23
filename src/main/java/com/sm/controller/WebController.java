@@ -12,6 +12,7 @@ import com.sm.repository.ResourceRepository;
 import com.sm.repository.VideoRepository;
 import com.sm.util.JsonResult;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -147,8 +149,28 @@ public class WebController {
     @ResponseBody
     public JsonResult newConsultPost(@ModelAttribute Consult consult) {
         JsonResult result = new JsonResult();
+        consult.setCreated(DateTime.now());
+        consult.setUpdated(DateTime.now());
         Consult con = consultRepository.save(consult);
         result.setSuccess(null != con.getId());
         return result;
+    }
+
+    @RequestMapping(value = "viewConsult", method = RequestMethod.GET)
+    public ModelAndView viewConsult(@RequestParam Long consultId) {
+        Consult consult = consultRepository.findOne(consultId);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("consult", consult);
+        mv.setViewName("viewConsult");
+        return mv;
+    }
+
+    @RequestMapping(value = "consultList", method = RequestMethod.GET)
+    public ModelAndView consultList() {
+        List<Consult> consults = consultRepository.findAll();
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("consults", consults);
+        mv.setViewName("consultList");
+        return mv;
     }
 }

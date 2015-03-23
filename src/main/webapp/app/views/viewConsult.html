@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <style>.col-sm-10{padding-top: 7px;}</style>
     <title>我要咨询</title>
 </head>
 <body>
@@ -30,21 +31,21 @@
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">姓名：</label>
+                                <label for="userName" class="col-sm-2 control-label">姓名：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="userName" class="form-control" id="inputEmail3">
+                                    <span id="userName">${(consult.userName)!}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mobile" class="col-sm-2 control-label">电话：</label>
                                 <div class="col-sm-10">
-                                    <input ype="text" name="mobile" class="form-control" id="mobile">
+                                    <span id="mobile">${(consult.mobile)!}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">邮箱：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="email" name="email">
+                                    <span id="email" name="email">${(consult.email)!}</span>
                                 </div>
                             </div>
                     </div>
@@ -63,20 +64,19 @@
                             <div class="form-group">
                                 <label for="scheme" class="col-sm-2 control-label">方案名称：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="scheme" name="scheme">
+                                    <span id="scheme" name="scheme">${(consult.scheme)!}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="intro" class="col-sm-2 control-label">问题描述：</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="intro" name="intro"></textarea>
+                                    <p id="intro" name="intro">${(consult.intro)!}</p>
                                 </div>
                             </div>
                     </div>
                 </div>
             </div>
         </div>
-        <input type="submit" class="btn btn-danger btn-block">
         </form>
     </div>
 
@@ -84,26 +84,5 @@
 
 <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script>
-    $(function(){
-        $('#consultForm').submit(function(e){
-            e.preventDefault();
-            var url = $(this).attr('action'), data = {};
-            $('#consultForm input:text,#consultForm textarea').each(function(i,v){
-                var that= $(v);
-                data[that.attr('name')] = that.val();
-            });
-
-            $.post(url, data, function(res){
-                if(res.success()){
-                    alert('提交成功!');
-                }else{
-                    alert('请完整填写数据重新提交!');
-                }
-            });
-            return false;
-        })
-    })
-</script>
 </body>
 </html>

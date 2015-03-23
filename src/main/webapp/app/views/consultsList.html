@@ -1,0 +1,55 @@
+<#assign ctx=request.contextPath>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+
+    <title>解决方案列表</title>
+
+    <style>
+        .media img{
+            width:64px;
+            height:64px;
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- 头部 -->
+<div class="container">
+    <div class="row">
+        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+    </div>
+    <!---->
+    <!--<div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">-->
+        <!--<img src="${category.logo}" alt="" style="min-width:50px;max-width:80px;height:80px;"/>-->
+        <!--<span class="label label-primary" style="margin-left:20px;font-size: 18px;">${category.name}</span>-->
+    <!--</div>-->
+
+    <div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">
+        <#list consults as consult>
+            <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                            <#if thumbnail??><img class="media-object" src="${thumbnail!}" style="width:80px" alt="..."></#if>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                            <h4 class="media-heading">${consult.scheme}</h4>
+                        </a>
+                        <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:38px;">${consult.intro}</p>
+                    </div>
+                </div>
+            </div>
+        </#list>
+    </div>
+</div>
+
+</body>
+</html>
