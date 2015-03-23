@@ -1,51 +1,94 @@
 <#assign ctx=request.contextPath>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-    <title>产品资料</title>
-    <style>
-        .line{ height:1px; border-bottom:1px solid #ccc; overflow:hidden; }
-    </style>
-</head>
-<body>
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+        <script src="../asset/js/jquery.min.js"></script>
+        <script src="../asset/js/bootstrap.min.js"></script>
+
+        <title>产品资料</title>
+        <style>
+            .line {
+                height: 1px;
+                border-bottom: 1px solid #ccc;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
 
 
-<!-- 头部 -->
-<div class="container">
-    <div class="row">
-        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+    <!-- 头部 -->
+    <div class="container">
+        <div class="row">
+            <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+        </div>
+        <div class="panel-group" id="accordion" style="margin-left: -15px;margin-right: -15px;" role="tablist"
+             aria-multiselectable="true">
+            <#if resultMap??>
+                <#list resultMap?keys as key>
+                    <div class="panel panel-default" style="margin-top:0px;border-radius:0px;border:0px solid;">
+                        <div class="panel-heading" role="tab" id="headingOne"
+                             style="border-bottom: 2px solid #ef2e24;padding:0px;">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   style="display: block;width: 100%;padding:10px 15px" href="#${key}" onclick = "toggleArrow(this)"
+                                   aria-expanded="true"
+                                   aria-controls="collapseOne">
+                                    ${key}
+                                    <img src="../asset/imgs/arrowup.png" style="float: right;width: 25px;">
+                                </a>
+                            </h4>
+                        </div>
+
+                        <#assign resources=resultMap[key]>
+                            <div id="${key}" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingOne">
+
+                                <#list resources as resource>
+                                    <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae">
+                                        <div class="media" style = "margin-bottom:10px;">
+                                            <div class="media-left">
+                                                <a href="${ctx}/web/product?resourceId=${resource.id}">
+                                                    <img class="media-object" src="${resource.thumbnail}"
+                                                         style="width:80px" alt="...">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                                    <h4 class="media-heading">${resource.name}</h4>
+                                                </a>
+
+                                                <p>${resource.intro}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </div>
+                    </div>
+                </#list>
+            </#if>
+        </div>
     </div>
-    <#if resultMap??>
-    <#list resultMap?keys as key>
-        <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
-            <h3>${key}</h3>
-            <div class="line"></div>
-            <#assign resources=resultMap[key]>
-        </div>
-        <#list resources as resource>
-        <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;">
-            <div class="media">
-                <div class="media-left">
-                    <a href="${ctx}/web/product?resourceId=${resource.id}">
-                        <img class="media-object" src="${resource.thumbnail}" style="width:80px" alt="...">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="${ctx}/web/resource?resourceId=${resource.id}">
-                        <h4 class="media-heading">${resource.name}</h4>
-                    </a>
-                    <p>${resource.intro}</p>
-                </div>
-            </div>
-        </div>
-        </#list>
-    </#list>
-    </#if>
-</div>
+    <script>
 
-</body>
-</html>
+        function toggleArrow(obj){
+            var isIn = $(obj).parents(".panel").find(".collapse").hasClass("in");
+            if(isIn){
+                $(obj).find("img").css({
+                    transform:'rotate(0deg)',
+                    WebkitTransform:'rotate(0deg)'
+                });
+            }else{
+                $(obj).find("img").css({
+                    transform:'rotate(180deg)',
+                    WebkitTransform:'rotate(180deg)'
+                });
+            }
+        }
+    </script>
+    </body>
+    </html>

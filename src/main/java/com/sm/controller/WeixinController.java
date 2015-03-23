@@ -9,6 +9,7 @@ import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
+import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.google.common.collect.Lists;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
@@ -33,7 +34,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/weixin")
-public class WeixinController extends WeixinControllerSupport {
+public class WeixinController extends WeixinControllerSupport{
 
     @Autowired
     private ResourceRepository resourceRepository;
@@ -167,24 +168,6 @@ public class WeixinController extends WeixinControllerSupport {
             return new TextMsg("关于").addLink("点击跳转", host+"/web/about");
         }
         return new TextMsg("服务器回复用户消息!");
-    }
-
-    /*1.1版本新增，重写父类方法，加入自定义微信消息处理器
-         *不是必须的，上面的方法是统一处理所有的文本消息，如果业务觉复杂，上面的会显得比较乱
-         *这个机制就是为了应对这种情况，每个MessageHandle就是一个业务，只处理指定的那部分消息
-         */
-    @Override
-    protected List<MessageHandle> initMessageHandles() {
-        List<MessageHandle> handles = new ArrayList<MessageHandle>();
-        handles.add(new MyMessageHandle());
-        return handles;
-    }
-    //1.1版本新增，重写父类方法，加入自定义微信事件处理器，同上
-    @Override
-    protected List<EventHandle> initEventHandles() {
-        List<EventHandle> handles = new ArrayList<EventHandle>();
-        handles.add(new MyEventHandle());
-        return handles;
     }
 
 }
