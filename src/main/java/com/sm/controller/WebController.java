@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+import com.github.sd4324530.fastweixin.api.OauthAPI;
 import com.google.common.base.Function;
 import com.google.common.collect.*;
 import com.sm.entity.Category;
@@ -11,6 +12,7 @@ import com.sm.repository.ConsultRepository;
 import com.sm.repository.ResourceRepository;
 import com.sm.repository.VideoRepository;
 import com.sm.util.JsonResult;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +43,23 @@ public class WebController {
     private VideoRepository videoRepository;
     @Autowired
     private ConsultRepository consultRepository;
+    @Autowired
+    OauthAPI oauthAPI;
 
     @RequestMapping(value={"/","/about"})
     public String index() {
         return "about";
     }
 
+    /**
+     * 解决方案、成功案例、产品DEMO
+     * @param categoryType (schemes;cases;demos)
+     * @return resourcesList.html
+     */
     @RequestMapping("resourceList")
-    public ModelAndView resourceList() {
+    public ModelAndView resourceList(@RequestParam String categoryType) {
         ModelAndView mv = new ModelAndView();
-        List<Category> categorys = categoryRepository.findByTypeNot("products");
+        List<Category> categorys = categoryRepository.findByType(categoryType);
 
         if (!CollectionUtils.isEmpty(categorys)) {
             final Map<Long,String> cateMap = Maps.newHashMapWithExpectedSize(categorys.size());
@@ -109,7 +119,7 @@ public class WebController {
             List<Resource> resources = resourceRepository.findAll(ids);
             mv.addObject("refDemos", resources);
         }
-        mv.setViewName("resource");
+                mv.setViewName("resource");
         return mv;
     }
 
@@ -180,10 +190,14 @@ public class WebController {
     }
 
     @RequestMapping(value = "newConsult", method = RequestMethod.GET)
-    public String newConsult() {
+    public ModelAndView newConsult(HttpServletRequest request) {
+        String code = request.getParameter("code");
+        String openId = oauthAPI.getToken(code).getOpenid();
         ModelAndView mv = new ModelAndView();
+        mv.addObject("openId", openId);
+        mv.setViewName("newConsult");
         mv.addObject("infoType","咨询篇");
-        return "newConsult";
+        return mv;
     }
 
     @RequestMapping(value = "newConsultPost", method = RequestMethod.POST)
@@ -207,9 +221,12 @@ public class WebController {
         return mv;
     }
 
-    @RequestMapping(value = "consultsList", method = RequestMethod.GET)
-    public ModelAndView consultList() {
-        List<Consult> consults = consultRepository.findAll();
+    @RequestMapping(value = "consultList", method = RequestMethod.GET)
+    public ModelAndView consultList(HttpServletRequest request) {
+        String code = request.getParameter("code");
+        String openId = oauthAPI.getToken(code).getOpenid();
+        openId = ObjectUtils.defaultIfNull(openId,"");
+        List<Consult> consults = consultRepository.findByOpenId(openId);
         ModelAndView mv = new ModelAndView();
         mv.addObject("consults", consults);
         mv.setViewName("consultsList");

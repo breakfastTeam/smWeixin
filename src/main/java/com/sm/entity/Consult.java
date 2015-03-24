@@ -15,6 +15,7 @@ public class Consult {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")          private Long id;
+    @Column(name="open_id")        private String openId;
     @Column(name="user_name")        private String userName;
     @Column(name="mobile")        private String mobile;
     @Column(name="email")        private String email;
@@ -33,6 +34,14 @@ public class Consult {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     public String getUserName() {

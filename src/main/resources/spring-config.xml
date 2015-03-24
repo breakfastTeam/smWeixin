@@ -83,4 +83,13 @@
     </tx:advice>
     <tx:annotation-driven/>
     <bean id="persistenceAnnotation" class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+
+    <bean id="apiConfig" class="com.github.sd4324530.fastweixin.api.config.ApiConfig" scope="singleton">
+        <constructor-arg index="0" value="wxee2e549c15fa8505"/>
+        <constructor-arg index="1" value="f411a20040455fd8412523065d585d9b"/>
+    </bean>
+    <bean id="oauthAPI" class="com.github.sd4324530.fastweixin.api.OauthAPI" scope="singleton">
+        <constructor-arg ref="apiConfig"/>
+    </bean>
 </beans>

@@ -141,7 +141,7 @@ public class WeixinController extends WeixinControllerSupport{
             String name = "";
             if(keyEvent.equals("schemes")){
                 name = "解决方案";
-            }else if(keyEvent.equals("schemes")){
+            }else if(keyEvent.equals("cases")){
                 name = "案例";
             }else{
                 name = "demo";
@@ -154,7 +154,7 @@ public class WeixinController extends WeixinControllerSupport{
                 article = new Article();
                 article.setPicUrl(category.getThumbnail());
                 article.setTitle(name);
-                article.setUrl(host + "/web/resourceList");
+                article.setUrl(host + "/web/resourceList?categoryType=" + keyEvent);
                 article.setDescription("点击查看更多" + name);
                 articles.add(article);
                 return new NewsMsg(articles);
