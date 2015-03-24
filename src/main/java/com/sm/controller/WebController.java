@@ -181,6 +181,8 @@ public class WebController {
 
     @RequestMapping(value = "newConsult", method = RequestMethod.GET)
     public String newConsult() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("infoType","咨询篇");
         return "newConsult";
     }
 
@@ -201,15 +203,16 @@ public class WebController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("consult", consult);
         mv.setViewName("viewConsult");
+        mv.addObject("infoType","咨询篇");
         return mv;
     }
 
-    @RequestMapping(value = "consultList", method = RequestMethod.GET)
+    @RequestMapping(value = "consultsList", method = RequestMethod.GET)
     public ModelAndView consultList() {
         List<Consult> consults = consultRepository.findAll();
         ModelAndView mv = new ModelAndView();
         mv.addObject("consults", consults);
-        mv.setViewName("consultList");
+        mv.setViewName("consultsList");
         mv.addObject("infoType","咨询篇");
         return mv;
     }

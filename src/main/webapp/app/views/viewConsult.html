@@ -9,40 +9,42 @@
     <title>我要咨询</title>
 </head>
 <body>
-
-<!-- 头部 -->
-<div class="container">
-    <div class="row">
-        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+<div class="row" style="margin-left: 0px;margin-right: 0px;">
+    <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+    <div style="background:url('../asset/imgs/title2px.png');min-height: 19px;padding:5px;margin-bottom: -25px;width: auto;float: left;position: relative;font-size: 10px;top: -55px;color: #ffffff;">
+        移动互联解决方案（${infoType}）
     </div>
-
-    <div class="container" style="margin-top:10px;">
+</div>
+<!-- 头部 -->
+    <div class="container">
         <form id="consultForm" class="form-horizontal" action="${ctx!}/web/newConsultPost" method="post">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
+            <div class="panel-group" id="accordion" style="margin-left: -15px;margin-right: -15px;" role="tablist"
+                 aria-multiselectable="true">
+                <div class="panel panel-default" style="margin-top:0px;border-radius:0px;border:0px solid;">
+                <div class="panel-heading" role="tab" id="headingOne" style="border-bottom: 2px solid #ef2e24;padding:0px;">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a data-toggle="collapse" onclick="toggleArrow(this)" style="display: block;width: 100%;padding:10px 15px" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             基本信息
+                            <img src="../asset/imgs/arrowup.png" style="float: right;width: 25px;">
                         </a>
                     </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                             <div class="form-group">
-                                <label for="userName" class="col-sm-2 control-label">姓名：</label>
+                                <label for="userName" style="float: left;" class="col-sm-2 control-label">姓名：</label>
                                 <div class="col-sm-10">
                                     <span class="form-control-static" id="userName">${(consult.userName)!}</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">电话：</label>
+                                <label for="mobile" style="float: left;"  class="col-sm-2 control-label">电话：</label>
                                 <div class="col-sm-10">
                                     <span class="form-control-static" id="mobile">${(consult.mobile)!}</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email" class="col-sm-2 control-label">邮箱：</label>
+                                <label for="email" style="float: left;"  class="col-sm-2 control-label">邮箱：</label>
                                 <div class="col-sm-10">
                                     <span class="form-control-static" id="email" name="email">${(consult.email)!}</span>
                                 </div>
@@ -50,11 +52,12 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
+            <div class="panel panel-default"  style="margin-top:0px;border-radius:0px;border:0px solid;">
+                <div class="panel-heading" role="tab" id="headingTwo"  style="border-bottom: 2px solid #ef2e24;padding:0px;">
                     <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="collapsed" onclick="toggleArrow(this)" style="display: block;width: 100%;padding:10px 15px"  data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             咨询内容
+                            <img src="../asset/imgs/arrowup.png" style="float: right;width: 25px;">
                         </a>
                     </h4>
                 </div>
@@ -77,11 +80,27 @@
             </div>
         </div>
         </form>
-    </div>
-
+        <input type="button" class="btn btn-danger btn-block" onclick="javascript:history.go(-1)" value="返回">
 </div>
 
 <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script>
+    function toggleArrow(obj) {
+        var isIn = $(obj).parents(".panel").find(".collapse").hasClass("in");
+        if (isIn) {
+            $(obj).find("img").css({
+                transform: 'rotate(0deg)',
+                WebkitTransform: 'rotate(0deg)'
+            });
+        } else {
+            $(obj).find("img").css({
+                transform: 'rotate(180deg)',
+                WebkitTransform: 'rotate(180deg)'
+            });
+        }
+    }
+</script>
 </body>
 </html>
