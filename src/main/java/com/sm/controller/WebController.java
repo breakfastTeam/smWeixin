@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Ez丶kkk on 15/2/7.
@@ -88,6 +89,26 @@ public class WebController {
         Resource resource = resourceRepository.findOne(resourceId);
         ModelAndView mv = new ModelAndView();
         mv.addObject("resource", resource);
+        String refCase = resource.getRefCase();
+        if (StringUtils.isNotBlank(refCase)) {
+            String refCases[] = refCase.split(",");
+            Set<Long> ids = Sets.newHashSetWithExpectedSize(refCases.length);
+            for (String rcase : refCases) {
+                ids.add(Long.valueOf(rcase));
+            }
+            List<Resource> resources = resourceRepository.findAll(ids);
+            mv.addObject("refCases", resources);
+        }
+        String refDemo = resource.getRefDemo();
+        if (StringUtils.isNotBlank(refDemo)) {
+            String refDemos[] = refDemo.split(",");
+            Set<Long> ids = Sets.newHashSetWithExpectedSize(refDemos.length);
+            for (String demo : refDemos) {
+                ids.add(Long.valueOf(demo));
+            }
+            List<Resource> resources = resourceRepository.findAll(ids);
+            mv.addObject("refDemos", resources);
+        }
         mv.setViewName("resource");
         return mv;
     }

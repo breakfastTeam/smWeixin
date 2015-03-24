@@ -24,11 +24,24 @@
     <div class="container">
         <div class="row" id="content" style="margin-top: 50px;">
             ${resource.content}
-            <#if resource.refCase??||resource.refDemo??>
+            <#if refCases??||refDemos??>
             <div class="well">
-                <#if resource.refCase??><a href="${ctx}/web/resource?resourceId=${resource.refCase}">查看案例</a></#if>
-                <#if resource.refDemo??><a href="${ctx}/web/resource?resourceId=${resource.refDemo}">查看DEMO</a></#if>
+                <#if refCases??>
+                    <#list refCases![] as case>
+                        <p><a href="${ctx}/web/resource?resourceId=${case.id}">查看案例${case_index+1}:${case.name}</a></p>
+                    </#list>
+                </#if>
+                <#if refDemos??>
+                    <#list refDemos![] as demo>
+                    <p><a href="${ctx}/web/resource?resourceId=${demo.id}">查看DEMO${demo_index+1}:${demo.name}</a></p>
+                    </#list>
+                </#if>
             </div>
+            </#if>
+            <#if resource.attachment??>
+                <div class="well">
+                    <p><a href="${resource.attachment}">下载DEMO附件</a></p>
+                </div>
             </#if>
         </div>
     </div>

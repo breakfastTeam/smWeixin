@@ -40,25 +40,35 @@
         </div>
         <#if categoryType=="schemes">
         <div class="form-group">
-            <label for="refCase" class="col-sm-4 control-label">关联案例：</label>
+            <label class="col-sm-4 control-label">关联案例：</label>
             <div class="col-sm-8">
-                <select id="refCase" name="refCase">
-                    <option value="">请选择</option>
-                    <#list caseResources![] as case>
-                        <option value="${case.id}" <#if resource.refCase==case.id>selected="selected"</#if>>${case.name}</option>
-                    </#list>
-                </select>
+                <#list caseResources![] as case>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="refCase" value="${case.id}" <#if refCases?? && refCases?seq_contains(case.id?string)>checked</#if>>${case.name}
+                    </label>
+                </div>
+                </#list>
             </div>
         </div>
         <div class="form-group">
-            <label for="refDemo" class="col-sm-4 control-label">关联DEMO：</label>
+            <label class="col-sm-4 control-label">关联DEMO：</label>
             <div class="col-sm-8">
-                <select id="refDemo" name="refDemo">
-                    <option value="">请选择</option>
-                    <#list demoResources![] as demo>
-                        <option value="${demo.id}" <#if resource.refCase==demo.id>selected="selected"</#if>>${demo.name}</option>
-                    </#list>
-                </select>
+                <#list demoResources![] as demo>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="refDemo" value="${demo.id}" <#if refDemos?? && refDemos?seq_contains(demo.id?string)>checked</#if>>${demo.name}
+                        </label>
+                    </div>
+                </#list>
+            </div>
+        </div>
+        </#if>
+        <#if categoryType=="demos">
+        <div class="form-group">
+            <label for="attachment" class="col-sm-4 control-label">上传DEMO附件：</label>
+            <div class="col-sm-8">
+                <input id="attachment" name="attachment" type="file"/>
             </div>
         </div>
         </#if>

@@ -23,6 +23,7 @@ public class Resource {
     @Column(name="content")         private String content;
     @Column(name="ref_case")        private String refCase;
     @Column(name="ref_demo")        private String refDemo;
+    @Column(name="attachment")      private String attachment;
     @Column(name="created")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime created;
@@ -108,6 +109,14 @@ public class Resource {
 
     public void setRefDemo(String refDemo) {
         this.refDemo = refDemo;
+    }
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
     }
 
     public DateTime getCreated() {

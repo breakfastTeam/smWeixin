@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -18,6 +19,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,7 @@ import java.util.Set;
 @Controller
 @RequestMapping("/manage")
 public class ManageController {
+    private final static Logger logger = LoggerFactory.getLogger(ManageController.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -151,6 +155,11 @@ public class ManageController {
                 String thumbnailPath = this._saveFile(thumbnail, request);
                 resource.setThumbnail(thumbnailPath);
             }
+            MultipartFile attachment = multiRequest.getFile("attachment");
+            if (attachment != null) {
+                String attachmentPath = this._saveFile(attachment, request);
+                resource.setAttachment(attachmentPath);
+            }
         }
         String categoryId = request.getParameter("categoryId");
         Long cid = 0L;
@@ -162,8 +171,16 @@ public class ManageController {
         resource.setName(request.getParameter("name"));
         resource.setIntro(request.getParameter("intro"));
         resource.setContent(request.getParameter("content"));
-        resource.setRefCase(request.getParameter("refCase"));
-        resource.setRefDemo(request.getParameter("refDemo"));
+//        resource.setRefCase(request.getParameter("refCase"));
+//        resource.setRefDemo(request.getParameter("refDemo"));
+        String refCases[] = request.getParameterValues("refCase");
+        if (refCases != null && refCases.length > 0) {
+            resource.setRefCase(Joiner.on(",").join(refCases));
+        }
+        String refDemos[] = request.getParameterValues("refDemo");
+        if (refDemos != null && refDemos.length > 0) {
+            resource.setRefDemo(Joiner.on(",").join(refDemos));
+        }
         DateTime now = DateTime.now();
         resource.setCreated(now);
         resource.setUpdated(now);
@@ -298,7 +315,16 @@ public class ManageController {
             Resource resource = resourceRepository.findOne(resourceId);
             mv.addObject("resource", resource);
             mv.addObject("categoryName", resource.getCategoryName());
-
+            String refCase = resource.getRefCase();
+            if (StringUtils.isNotBlank(refCase)) {
+                String refCases[] = refCase.split(",");
+                mv.addObject("refCases", Lists.newArrayList(refCases));
+            }
+            String refDemo = resource.getRefDemo();
+            if (StringUtils.isNotBlank(refDemo)) {
+                String refDemos[] = refDemo.split(",");
+                mv.addObject("refDemos", Lists.newArrayList(refDemos));
+            }
 
         }else if (categoryId != null) {
             mv.addObject("categoryName", category.getName());
@@ -349,15 +375,12 @@ public class ManageController {
                 String logoPath=this._saveFile(logo, request);
                 video.setLogo(logoPath);
             }
-            MultipartFile url = multiRequest.getFile("url");
-            if (url != null) {
-                String urlPath=this._saveFile(url, request);
-                video.setUrl(urlPath);
-            }
         }
         video.setName(request.getParameter("name"));
+        video.setUrl(request.getParameter("url"));
         video.setSize(request.getParameter("size"));
         video.setLength(request.getParameter("length"));
+        video.setIntro(request.getParameter("intro"));
         video.setUpdated(now);
         Video result = videoRepository.saveAndFlush(video);
         jsonResult.setSuccess(result != null);

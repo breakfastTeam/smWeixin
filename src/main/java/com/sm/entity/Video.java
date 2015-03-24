@@ -19,6 +19,7 @@ public class Video {
     @Column(name="url")     private String url;
     @Column(name="size")    private String size;
     @Column(name="length")  private String length;
+    @Column(name="intro")  private String intro;
     @Column(name="created")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime created;
@@ -72,6 +73,14 @@ public class Video {
 
     public void setLength(String length) {
         this.length = length;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public DateTime getCreated() {

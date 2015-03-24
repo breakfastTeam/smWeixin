@@ -45,12 +45,13 @@
             <#list videos as video>
             <li class="uk-width-1-1">
                 <div class="thumbnail">
-                <a href="${ctx}/web/video?videoId=${video.id}">
+                <a href="${video.url}">
                     <img src="${video.logo}" width="100%">
 
                 </a>
                     <div class="title1" style="font-size:16px; margin-top:-41px;margin-bottom: -5px;z-index:10;background-color: rgba(0,0,0,.5);color:#ffffff;position: relative;">
                         <p style = "padding:10px;margin-bottom:5px;">${video.name}</p>
+                        <p style = "padding:10px;margin-bottom:5px;">${video.intro}</p>
                     </div>
                 </div>
             </li>
