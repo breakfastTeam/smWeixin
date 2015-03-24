@@ -62,10 +62,24 @@ public class WebController {
             for (Resource resource : resources) {
                 multiMap.put(cateMap.get(resource.getCategoryId()), resource);
             }
-
             mv.addObject("resultMap", multiMap);
+            String infoType = categorys.get(0).getType();
+            if(infoType.equals("products")){
+                mv.addObject("infoType","产品篇");
+            }else if(infoType.equals("schemes")){
+                mv.addObject("infoType","方案篇");
+            }else if(infoType.equals("case")){
+                mv.addObject("infoType","案例篇");
+            }else if(infoType.equals("demos")){
+                mv.addObject("infoType","Demo篇");
+            }else{
+                mv.addObject("infoType","未知");
+            }
+        }else{
+            mv.addObject("infoType","未知");
         }
         mv.setViewName("resourcesList");
+
         return mv;
     }
 
@@ -84,6 +98,7 @@ public class WebController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("videos", videos);
         mv.setViewName("videoList");
+        mv.addObject("infoType","视频篇");
         return mv;
     }
 
@@ -116,6 +131,9 @@ public class WebController {
                 }
             }
             mv.addObject("resultMap", result);
+            mv.addObject("infoType","产品篇");
+        }else{
+            mv.addObject("infoType","未知");
         }
         mv.setViewName("productIntro");
         return mv;
@@ -171,6 +189,7 @@ public class WebController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("consults", consults);
         mv.setViewName("consultList");
+        mv.addObject("infoType","咨询篇");
         return mv;
     }
 }

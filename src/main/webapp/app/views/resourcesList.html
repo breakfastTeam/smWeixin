@@ -24,6 +24,9 @@
     <div class="container">
         <div class="row">
             <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+            <div style="background:url('../asset/imgs/title2px.png');min-height: 19px;padding:5px;margin-bottom: -25px;width: auto;float: left;position: relative;font-size: 10px;top: -55px;color: #ffffff;">
+                移动互联解决方案（${infoType}）
+            </div>
         </div>
         <!---->
         <!--<div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">-->
@@ -54,11 +57,11 @@
                             <div id="${key}" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingOne">
                                 <#list resources as resource>
-                                    <div class="row"
+                                    <div class="row" onclick = "toResource('${resource.id}')"
                                          style="margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae">
                                         <div class="media">
                                             <div class="media-left">
-                                                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                                <a href="javascript:void(0)">
                                                     <img class="media-object" src="${resource.thumbnail}"
                                                          style="width:80px" alt="...">
                                                 </a>
@@ -82,7 +85,9 @@
         </div>
     </div>
     <script>
-
+        function toResource(id){
+            window.location.href = "${ctx}/web/resource?resourceId="+id;
+        }
         function toggleArrow(obj) {
             var isIn = $(obj).parents(".panel").find(".collapse").hasClass("in");
             if (isIn) {
