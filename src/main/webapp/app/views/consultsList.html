@@ -1,63 +1,67 @@
 <#assign ctx=request.contextPath>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 
-    <title>咨询历史</title>
+        <title>咨询历史</title>
 
-    <style>
-        .media img{
-            width:64px;
-            height:64px;
-        }
-    </style>
-</head>
-<body>
+        <style>
+            .media img {
+                width: 64px;
+                height: 64px;
+            }
+        </style>
+    </head>
+    <body>
 
 
-<!-- 头部 -->
-<div class="container">
-    <div class="row">
-        <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
-        <div style="background:url('../asset/imgs/title2px.png');min-height: 19px;padding:5px;margin-bottom: -25px;width: auto;float: left;position: relative;font-size: 10px;top: -55px;color: #ffffff;">
-            移动互联解决方案（${infoType}）
+    <!-- 头部 -->
+    <div class="container">
+        <div class="row">
+            <img src="../asset/imgs/top.jpg" style="width:100%;" alt=""/>
+
+            <div style="background:url('../asset/imgs/title2px.png');min-height: 19px;padding:5px;margin-bottom: -25px;width: auto;float: left;position: relative;font-size: 10px;top: -55px;color: #ffffff;">
+                移动互联解决方案（${infoType}）
+            </div>
         </div>
-    </div>
-    <!---->
-    <!--<div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">-->
+        <!---->
+        <!--<div class="row" style="margin-top:20px;margin-left:0px;margin-right:0px;">-->
         <!--<img src="${category.logo}" alt="" style="min-width:50px;max-width:80px;height:80px;"/>-->
         <!--<span class="label label-primary" style="margin-left:20px;font-size: 18px;">${category.name}</span>-->
-    <!--</div>-->
+        <!--</div>-->
 
-    <div class="row" style="margin-left: -15px;margin-right: -15px;">
-        <#list consults as consult>
-            <div class="row" style="margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae"  onclick = "toResource('${consult.id}')">
-                <!--
-                <div class="media">
-                    <div class="media-left">
-                        <a href="${ctx}/web/resource?resourceId=${resource.id}">
-                            <#if thumbnail??><img class="media-object" src="${thumbnail!}" style="width:80px" alt="..."></#if>
-                        </a>
-                    </div>-->
+        <div class="row" style="margin-left: -15px;margin-right: -15px;">
+            <#list consults as consult>
+                <div class="row"
+                     style="margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae"
+                     onclick="toResource('${consult.id}')">
+                    <!--
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                <#if thumbnail??><img class="media-object" src="${thumbnail!}" style="width:80px" alt="..."></#if>
+                            </a>
+                        </div>-->
                     <div class="media-body" style="padding-left:20px;">
                         <a href="javascript:void(0)">
                             <h4 class="media-heading" style="color:#444444;">${consult.scheme}</h4>
                         </a>
-                        <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 0px 0;overflow: hidden;height:38px;">${consult.intro}</p>
+
+                        <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 0px 0;overflow: hidden;height:38px;">
+                            ${consult.intro}</p>
                     </div>
                 </div>
-            </div>
-        </#list>
+            </#list>
+        </div>
     </div>
-</div>
-<script>
-    function toResource(id){
-        window.location.href = "${ctx}/web/viewConsult?consultId="+id;
-    }
-</script>
-</body>
-</html>
+    <script>
+        function toResource(id) {
+            window.location.href = "${ctx}/web/viewConsult?consultId=" + id;
+        }
+    </script>
+    </body>
+    </html>

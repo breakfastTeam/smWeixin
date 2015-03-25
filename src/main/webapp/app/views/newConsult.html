@@ -91,13 +91,13 @@
         $('#consultForm').submit(function(e){
             e.preventDefault();
             var url = $(this).attr('action'), data = {};
-            $('#consultForm input:text,#consultForm input:hidden,#consultForm textarea').each(function(i,v){
+            $('#consultForm input,#consultForm textarea').each(function(i,v){
                 var that= $(v);
                 data[that.attr('name')] = that.val();
             });
 
             $.post(url, data, function(res){
-                if(res.success()){
+                if(res.success){
                     alert('提交成功!');
                 }else{
                     alert('请完整填写数据重新提交!');
