@@ -189,10 +189,9 @@ public class WebController {
         return "news";
     }
 
-    @RequestMapping(value = "newConsult", method = RequestMethod.GET)
+    @RequestMapping(value = "newConsult")
     public ModelAndView newConsult(HttpServletRequest request) {
-        String code = request.getParameter("code");
-        String openId = oauthAPI.getToken(code).getOpenid();
+        String openId = request.getParameter("openId");
         ModelAndView mv = new ModelAndView();
         mv.addObject("openId", openId);
         mv.setViewName("newConsult");
@@ -223,8 +222,7 @@ public class WebController {
 
     @RequestMapping(value = "consultList", method = RequestMethod.GET)
     public ModelAndView consultList(HttpServletRequest request) {
-        String code = request.getParameter("code");
-        String openId = oauthAPI.getToken(code).getOpenid();
+        String openId = request.getParameter("openId");
         openId = ObjectUtils.defaultIfNull(openId,"");
         List<Consult> consults = consultRepository.findByOpenId(openId);
         ModelAndView mv = new ModelAndView();

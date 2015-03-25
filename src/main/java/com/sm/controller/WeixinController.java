@@ -159,6 +159,20 @@ public class WeixinController extends WeixinControllerSupport{
                 articles.add(article);
                 return new NewsMsg(articles);
             }
+        }else if(keyEvent.equals("consult")){
+            Article article = new Article();
+            article.setPicUrl(host + "/asset/imgs/zixunlist.jpg");
+            article.setTitle("我要咨询");
+            article.setUrl(host + "/web/newConsult?openId=" + event.getFromUserName());
+            article.setDescription("点击去提交你的咨询");
+            return new NewsMsg(Lists.newArrayList(article));
+        }else if(keyEvent.equals("consults")){
+            Article article = new Article();
+            article.setPicUrl(host + "/asset/imgs/zixun.jpg");
+            article.setTitle("我要咨询");
+            article.setUrl(host + "/web/consultList?openId=" + event.getFromUserName());
+            article.setDescription("查看自己的历史咨询记录");
+            return new NewsMsg(Lists.newArrayList(article));
         }else if(keyEvent.equals("videos")){
             List<Video> videos = videoRepository.findAll();
             List<Article> articles = Lists.newArrayList();
