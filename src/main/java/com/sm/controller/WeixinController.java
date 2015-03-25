@@ -1,15 +1,11 @@
 package com.sm.controller;
 
-import com.github.sd4324530.fastweixin.handle.EventHandle;
-import com.github.sd4324530.fastweixin.handle.MessageHandle;
 import com.github.sd4324530.fastweixin.message.Article;
 import com.github.sd4324530.fastweixin.message.BaseMsg;
 import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
-import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
-import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.google.common.collect.Lists;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
@@ -25,11 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
