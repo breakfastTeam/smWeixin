@@ -91,7 +91,7 @@
         $('#consultForm').submit(function(e){
             e.preventDefault();
             var url = $(this).attr('action'), data = {};
-            $('#consultForm input:text,#consultForm textarea').each(function(i,v){
+            $('#consultForm input:text,#consultForm input:hidden,#consultForm textarea').each(function(i,v){
                 var that= $(v);
                 data[that.attr('name')] = that.val();
             });

@@ -1,17 +1,15 @@
 package com.sm.controller;
 
+import com.github.sd4324530.fastweixin.api.CustomAPI;
+import com.github.sd4324530.fastweixin.api.enums.ResultType;
+import com.github.sd4324530.fastweixin.message.BaseMsg;
+import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.sm.entity.Category;
-import com.sm.entity.Resource;
-import com.sm.entity.User;
-import com.sm.entity.Video;
-import com.sm.repository.CategoryRepository;
-import com.sm.repository.ResourceRepository;
-import com.sm.repository.UserRepository;
-import com.sm.repository.VideoRepository;
+import com.sm.entity.*;
+import com.sm.repository.*;
 import com.sm.util.CommonUtils;
 import com.sm.util.JsonResult;
 import com.sm.util.SmUtils;
@@ -30,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import sun.reflect.generics.tree.ReturnType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -59,6 +58,10 @@ public class ManageController {
     private VideoRepository videoRepository;
     @Value("#{configProperties['host']}")
     private String host;
+    @Autowired
+    private ConsultRepository consultRepository;
+    @Autowired
+    private CustomAPI customAPI;
     private String separator = "/";
 
     @RequestMapping(value = {"/","/login"}, method= RequestMethod.GET)
@@ -392,6 +395,24 @@ public class ManageController {
         JsonResult jsonResult = new JsonResult();
         videoRepository.delete(videoId);
         jsonResult.setSuccess(true);
+        return jsonResult;
+    }
+
+    @RequestMapping("consults")
+    public ModelAndView consults() {
+        ModelAndView mv = new ModelAndView();
+        List<Consult> consults = consultRepository.findAll();
+        mv.addObject("consults", consults);
+        mv.setViewName("manage/consults");
+        return mv;
+    }
+
+    @RequestMapping("consults/reply")
+    public JsonResult consultsReply(@RequestParam String openId, @RequestParam String content) {
+        JsonResult jsonResult = new JsonResult();
+        ResultType rt = customAPI.sendCustomMessage(openId, new TextMsg(content));
+        jsonResult.setSuccess(rt.getCode() == 0);
+        jsonResult.setMessage(rt.getDescription());
         return jsonResult;
     }
 

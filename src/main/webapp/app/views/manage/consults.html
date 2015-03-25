@@ -1,0 +1,87 @@
+<#assign ctx=request.contextPath>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10" style="margin-top:20px;">
+                <div id="tds">
+                    <table class="table table-bordered table-responsive table-striped" id="table">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">序号</th>
+                            <th class="col-md-1">姓名</th>
+                            <th class="col-md-1">电话</th>
+                            <th class="col-md-1">邮箱</th>
+                            <th class="col-md-1">方案名称</th>
+                            <th class="col-md-1">需求描述</th>
+                            <th class="col-md-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list consults as consult>
+                            <tr>
+                                <td>${consult_index+1}</td>
+                                <td>${consult.userName}</td>
+                                <td>${consult.mobile}</td>
+                                <td>${consult.email}</td>
+                                <td>${consult.scheme}</td>
+                                <td>${consult.intro}</td>
+                                <td>
+                                    <a href="javascript:void(0);" class="reply" data-id="${consult.openId}">回复消息</a>
+                                </td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                    <#if (consults![])?size < 1>
+                    <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 20px;">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>没有记录!</strong>
+                    </div>
+                    </#if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            $('#table').on('click','a.reply',function(){
+                var openId=$(this).data('id');
+                reply(function(content){
+                    console.log(content);
+                    $.post('${ctx}/manage/consults/reply',{openId: openId,content: content},function(res){
+                        if(res.success) {
+                            $.mhtMsg('操作成功!');
+                        }else{
+                            $.mhtMsg(res.message);
+                        }
+                    })
+                })
+            })
+
+        });
+        function reply(callback){
+            (new PNotify({
+                title: '回复',
+                text: '填写回复内容.',
+                icon: 'glyphicon glyphicon-question-sign',
+                width: '300px',
+                height: '400px',
+                hide: false,
+                confirm: {
+                    prompt: true,
+                    prompt_multi_line: true,
+                    prompt_default: ''
+                },
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                history: {
+                    history: false
+                }
+            })).get().on('pnotify.confirm', function(e, notice, val) {
+                        callback(val);
+                    }).on('pnotify.cancel', function(e, notice) {
+
+                    });
+        }
+    </script>

@@ -44,6 +44,7 @@
                 <li><a href="javascript:void(0);" id="cases">案例管理</a></li>
                 <li><a href="javascript:void(0);" id="demos">产品DEMO管理</a></li>
                 <li><a href="javascript:void(0);" id="videos">视频管理</a></li>
+                <li><a href="javascript:void(0);" id="consults">咨询管理</a></li>
                 <li><a href="javascript:void(0);" id="changePass">修改密码</a></li>
                 <li><a href="javascript:void(0);" id="exit">退出</a></li>
             </ul>
@@ -86,6 +87,12 @@
             $('.active').removeClass('active');
             $(this).parent('li').addClass('active');
             $('#content').load('${ctx}/manage/videos');
+        })
+
+        $('#consults').click(function(){
+            $('.active').removeClass('active');
+            $(this).parent('li').addClass('active');
+            $('#content').load('${ctx}/manage/consults');
         })
 
         $('#changePass').click(function(){

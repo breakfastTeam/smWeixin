@@ -5,7 +5,6 @@ import com.github.sd4324530.fastweixin.message.BaseMsg;
 import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
-import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.google.common.collect.Lists;
 import com.sm.entity.Category;
 import com.sm.entity.Resource;
@@ -54,59 +53,6 @@ public class WeixinController extends WeixinControllerSupport{
         return SmUtils.APP_AESKEY;
     }
     //重写父类方法，处理对应的微信消息
-    @Override
-    protected BaseMsg handleTextMsg(TextReqMsg msg){
-        String content = msg.getContent();
-        log.debug("用户发送到服务器的内容:{}", content);
-        //产品资料
-        if (content.equals("products")) {
-            List<Article> articles = Lists.newArrayList();
-            List<Category> category = categoryRepository.findByType("products");
-            if (!CollectionUtils.isEmpty(category)) {
-                List<Resource> resources = resourceRepository.findByCategoryId(category.get(0).getId());
-                if(!CollectionUtils.isEmpty(resources)){
-                    Article article = new Article();
-                    article.setPicUrl(resources.get(0).getThumbnail());
-                    article.setTitle("产品资料");
-                    article.setUrl(host + "/web/productIntro");
-                    article.setDescription("点击查看更多产品资料");
-                    articles.add(article);
-                    return new NewsMsg(articles);
-                }
-            }
-        }else if(content.equals("schemes")||content.equals("cases")||content.equals("demos")){
-            //解决方案、案例、demo
-            List<Category> categorys = categoryRepository.findByType(content);
-            List<Article> articles = Lists.newArrayList();
-            Article article = null;
-            for(Category category:categorys){
-                article = new Article();
-                article.setPicUrl(category.getThumbnail());
-                article.setTitle(category.getName());
-                article.setUrl(host+"/web/resourceList?categoryId="+category.getId());
-                articles.add(article);
-            }
-            return new NewsMsg(articles);
-        }else if(content.equals("videos")){
-            List<Video> videos = videoRepository.findAll();
-            List<Article> articles = Lists.newArrayList();
-            Article article = null;
-            Video video = videos.get(0);
-            if (video != null) {
-                article = new Article();
-                article.setPicUrl(video.getLogo());
-                article.setTitle(video.getName());
-                article.setUrl(host + "/web/videoList");
-                article.setDescription("点击查看更多在线视频");
-                articles.add(article);
-            }
-            return new NewsMsg(articles);
-        }else if(content.equals("about")){
-
-            return new TextMsg("关于").addLink("点击跳转", host+"/web/about");
-        }
-        return new TextMsg("服务器回复用户消息!");
-    }
 
     @Override
     protected BaseMsg handleMenuClickEvent(MenuEvent event) {
