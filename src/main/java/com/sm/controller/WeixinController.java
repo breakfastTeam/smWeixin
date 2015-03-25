@@ -106,7 +106,7 @@ public class WeixinController extends WeixinControllerSupport{
         }else if(keyEvent.equals("consults")){
             Article article = new Article();
             article.setPicUrl(host + "/asset/imgs/zixun.jpg");
-            article.setTitle("我要咨询");
+            article.setTitle("我的咨询");
             article.setUrl(host + "/web/consultList?openId=" + event.getFromUserName());
             article.setDescription("查看自己的历史咨询记录");
             return new NewsMsg(Lists.newArrayList(article));
