@@ -408,6 +408,7 @@ public class ManageController {
     }
 
     @RequestMapping("consults/reply")
+    @ResponseBody
     public JsonResult consultsReply(@RequestParam String openId, @RequestParam String content) {
         JsonResult jsonResult = new JsonResult();
         ResultType rt = customAPI.sendCustomMessage(openId, new TextMsg(content));
