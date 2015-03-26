@@ -20,3 +20,9 @@ ADD COLUMN `attachment` VARCHAR(500) CHARACTER SET 'utf8mb4' NULL COMMENT 'demo�
 
 ALTER TABLE `sm_weixin`.`consult`
 ADD COLUMN `open_id` VARCHAR(50) CHARACTER SET 'utf8mb4' NOT NULL COMMENT 'open_id' AFTER `id`;
+
+
+
+ALTER TABLE `sm_weixin`.`resource`
+CHANGE COLUMN `banner` `banner` VARCHAR(200) CHARACTER SET 'ascii' NULL COMMENT 'url。' ,
+CHANGE COLUMN `thumbnail` `thumbnail` VARCHAR(200) CHARACTER SET 'ascii' NULL COMMENT 'url。' ;
