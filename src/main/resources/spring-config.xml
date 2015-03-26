@@ -3,8 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 指定数据库配置信息 -->
     <bean id="propertyConfigurer"
@@ -24,6 +26,12 @@
             </list>
         </property>
     </bean>
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.sm.controller" />
+    <!-- 支持异步方法执行 -->
+    <task:annotation-driven />
+
     <bean id="dataSourceProxool"
           class="org.logicalcobwebs.proxool.ProxoolDataSource">
         <property name="driver">
@@ -94,5 +102,31 @@
     </bean>
     <bean id="customAPI" class="com.github.sd4324530.fastweixin.api.CustomAPI" scope="singleton">
         <constructor-arg ref="apiConfig"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <!-- SMTP settings -->
+        <property name="host" value="${SMTP_HOST}" />
+        <property name="port" value="${SMTP_PORT}" />
+        <property name="username" value="${USER_NAME}" />
+        <property name="password" value="${PASSWORD}" />
+        <property name="defaultEncoding" value="${mail.encoding}"/>
+
+        <property name="javaMailProperties">
+            <!-- additional properties specific to JavaMail -->
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <!--取决于使用的邮件服务是否支持STARTTLS加密-->
+                 <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
+                <!--取决于是否使用SSL端口发送邮件-->
+                <!--<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>-->
+                <!--<prop key="mail.smtp.socketFactory.fallback">false</prop>-->
+                <!--<prop key="mail.smtp.socketFactory.port">${SMTP_PORT}</prop>-->
+                <prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+                <!--测试时开启-->
+                 <!--<prop key="mail.debug">true</prop>-->
+            </props>
+        </property>
     </bean>
 </beans>

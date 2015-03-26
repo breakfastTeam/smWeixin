@@ -27,13 +27,15 @@
             <#if refCases??||refDemos??>
             <div class="well">
                 <#if refCases??>
+                    <p style="margin-bottom: -10px;">案例:</p>
                     <#list refCases![] as case>
-                        <p><a href="${ctx}/web/resource?resourceId=${case.id}">查看案例${case_index+1}:${case.name}</a></p>
+                        <p><a href="${ctx}/web/resource?resourceId=${case.id}">${case.name}</a></p>
                     </#list>
                 </#if>
                 <#if refDemos??>
+                    <p style="margin-bottom: -10px;">demo:</p>
                     <#list refDemos![] as demo>
-                    <p><a href="${ctx}/web/resource?resourceId=${demo.id}">查看DEMO${demo_index+1}:${demo.name}</a></p>
+                    <p><a href="${ctx}/web/resource?resourceId=${demo.id}">${demo.name}</a></p>
                     </#list>
                 </#if>
             </div>

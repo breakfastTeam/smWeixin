@@ -20,6 +20,7 @@ public class Consult {
     @Column(name="mobile")        private String mobile;
     @Column(name="email")        private String email;
     @Column(name="scheme")        private String scheme;
+    @Column(name="scheme_id")        private Long schemeId;
     @Column(name="intro")        private String intro;
     @Column(name="created")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
@@ -82,6 +83,14 @@ public class Consult {
 
     public void setIntro(String intro) {
         this.intro = intro;
+    }
+
+    public Long getSchemeId() {
+        return schemeId;
+    }
+
+    public void setSchemeId(Long schemeId) {
+        this.schemeId = schemeId;
     }
 
     public DateTime getCreated() {

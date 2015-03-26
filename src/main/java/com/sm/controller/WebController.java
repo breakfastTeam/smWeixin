@@ -16,12 +16,21 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +54,11 @@ public class WebController {
     private ConsultRepository consultRepository;
     @Autowired
     OauthAPI oauthAPI;
-
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    private String subject = "方案咨询提醒邮件";
+    @Value("#{configProperties['USER_NAME']}")
+    private String USER_NAME;
     @RequestMapping(value={"/","/about"})
     public String index() {
         return "about";
@@ -191,8 +204,17 @@ public class WebController {
 
     @RequestMapping(value = "newConsult")
     public ModelAndView newConsult(HttpServletRequest request) {
-        String openId = request.getParameter("openId");
         ModelAndView mv = new ModelAndView();
+        String openId = request.getParameter("openId");
+        List<Category> categorys = categoryRepository.findByTypeIn(Lists.newArrayList("products", "schemes"));
+        final Set<Long> cateSet = Sets.newHashSetWithExpectedSize(categorys.size());
+        for (Category cate : categorys) {
+            cateSet.add(cate.getId());
+        }
+        if (!CollectionUtils.isEmpty(cateSet)) {
+            List<Resource> resources = resourceRepository.findByCategoryIdIn(cateSet);
+            mv.addObject("resources", resources);
+        }
         mv.addObject("openId", openId);
         mv.setViewName("newConsult");
         mv.addObject("infoType","咨询篇");
@@ -206,6 +228,14 @@ public class WebController {
         consult.setCreated(DateTime.now());
         consult.setUpdated(DateTime.now());
         Consult con = consultRepository.save(consult);
+        if (con.getId() != null && consult.getSchemeId() != null) {
+            Resource resource = resourceRepository.findOne(consult.getSchemeId());
+            try {
+                _sendEmail(resource.getEmail(), consult);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         result.setSuccess(null != con.getId());
         return result;
     }
@@ -230,5 +260,16 @@ public class WebController {
         mv.setViewName("consultsList");
         mv.addObject("infoType","咨询篇");
         return mv;
+    }
+
+    @Async
+    private void _sendEmail(final String emailAddress,final Consult consult){
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setFrom(USER_NAME);
+        email.setTo(emailAddress);
+        email.setSubject(subject);
+        email.setText("你有一个咨询要处理：\n\t\t姓名：" + consult.getUserName() + "\n\t电话：" + consult.getMobile() + "\n\t邮箱："
+                + consult.getEmail() + "\n\t方案名称：" + consult.getScheme() + "\n\t需求描述：" + consult.getIntro() + "\n\t 请到管理平台回复消息：http://productone.chinacloudapp.cn/weixin/manage/login" );
+        mailSender.send(email);
     }
 }

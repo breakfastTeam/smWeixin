@@ -26,3 +26,79 @@ ADD COLUMN `open_id` VARCHAR(50) CHARACTER SET 'utf8mb4' NOT NULL COMMENT 'open_
 ALTER TABLE `sm_weixin`.`resource`
 CHANGE COLUMN `banner` `banner` VARCHAR(200) CHARACTER SET 'ascii' NULL COMMENT 'url。' ,
 CHANGE COLUMN `thumbnail` `thumbnail` VARCHAR(200) CHARACTER SET 'ascii' NULL COMMENT 'url。' ;
+
+-- 20150327
+ALTER TABLE `sm_weixin`.`resource`
+ADD COLUMN `email` VARCHAR(100) CHARACTER SET 'utf8mb4' NULL DEFAULT NULL COMMENT '售前人员提醒邮箱' AFTER `attachment`;
+ALTER TABLE `sm_weixin`.`consult`
+ADD COLUMN `scheme_id` INT(11) NULL DEFAULT NULL COMMENT 'resourceId' AFTER `intro`;
+
+
+
+
+/**
+
+ {"button": [
+    {
+        "name": "资料",
+        "sub_button": [
+            {
+                "type": "view",
+                "name": "产品",
+                "url":"http://productone.chinacloudapp.cn/weixin/web/productIntro",
+                "sub_button": [ ]
+            },
+            {
+                "type": "view",
+                "name": "方案",
+            "url":"http://productone.chinacloudapp.cn/weixin/web/resourceList?categoryType=schemes",
+                "sub_button": [ ]
+            },
+            {
+                "type": "view",
+                "name": "案例",
+                "url":"http://productone.chinacloudapp.cn/weixin/web/resourceList?categoryType=cases",
+                "sub_button": [ ]
+            }
+        ]
+    },
+    {
+        "name": "演示",
+        "sub_button": [
+            {
+                "type": "view",
+                "name": "视频",
+                "url": "http://productone.chinacloudapp.cn/weixin/web/videoList",
+                "sub_button": [ ]
+            },
+            {
+                "type": "view",
+                "name": "Demo",
+                "url":"http://productone.chinacloudapp.cn/weixin/web/resourceList?categoryType=demos",
+                "sub_button": [ ]
+            }
+        ]
+    },
+    {
+        "name":"咨询",
+     "sub_button":[
+     {
+         "type":"click",
+         "name":"我要咨询",
+         "key":"consult"
+      },
+      {
+         "type":"click",
+         "name":"我的咨询历史",
+         "key":"consults"
+      },
+      {
+         "type":"click",
+         "name":"微社区",
+         "key":"community"
+      }]
+    }
+]}
+
+
+ */

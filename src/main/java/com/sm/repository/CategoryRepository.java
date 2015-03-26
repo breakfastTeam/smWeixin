@@ -2,7 +2,6 @@ package com.sm.repository;
 
 import com.sm.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
 /**
@@ -14,4 +13,5 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     List<Category> findByTypeNot(String category);
 
+    List<Category> findByTypeIn(List<String> strings);
 }

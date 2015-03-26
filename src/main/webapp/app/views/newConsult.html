@@ -35,19 +35,19 @@
                             <div class="form-group">
                                 <label for="inputEmail3" style="float: left" class="col-sm-2 control-label">姓名：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="userName" class="form-control" id="inputEmail3">
+                                    <input type="text" name="userName" class="form-control" id="inputEmail3" required="true">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mobile" style="float: left" class="col-sm-2 control-label">电话：</label>
                                 <div class="col-sm-10">
-                                    <input ype="text" name="mobile" class="form-control" id="mobile">
+                                    <input ype="text" name="mobile" class="form-control" id="mobile" required="true">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email" style="float: left" class="col-sm-2 control-label">邮箱：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="email" name="email">
+                                    <input type="text" class="form-control" id="email" name="email" required="true">
                                 </div>
                             </div>
                     </div>
@@ -65,15 +65,21 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                             <div class="form-group">
-                                <label for="scheme" class="col-sm-2 control-label">方案名称：</label>
+                                <label for="schemeId" class="col-sm-2 control-label">方案名称：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="scheme" name="scheme">
+                                    <select class="form-control" id="schemeId" name="schemeId" required="true">
+                                    <#if resources??>
+                                        <#list resources as resource>
+                                        <option value="${resource.id}">${resource.name}</option>
+                                        </#list>
+                                    </#if>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="intro" class="col-sm-2 control-label">需求描述：</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" style="height:100px;" id="intro" name="intro"></textarea>
+                                    <textarea class="form-control" style="height:100px;" id="intro" name="intro" required="true"></textarea>
                                 </div>
                             </div>
                     </div>
@@ -90,19 +96,31 @@
     $(function(){
         $('#consultForm').submit(function(e){
             e.preventDefault();
-            var url = $(this).attr('action'), data = {};
-            $('#consultForm input,#consultForm textarea').each(function(i,v){
+            var url = $(this).attr('action'), data = {}, checked = true;
+            $('#consultForm input,#consultForm select,#consultForm textarea').each(function(i,v){
                 var that= $(v);
+                if(that.val().trim()==''){
+                    that.focus();
+                    checked = false;
+                }
+
                 data[that.attr('name')] = that.val();
             });
+            if(checked){
+                var scheme=$("#schemeId").find("option:selected").text();
+                data.scheme = scheme;
 
-            $.post(url, data, function(res){
-                if(res.success){
-                    alert('提交成功!');
-                }else{
-                    alert('请完整填写数据重新提交!');
-                }
-            });
+                $.post(url, data, function(res){
+                    if(res.success){
+                        alert('提交成功!');
+                    }else{
+                        alert('请完整填写数据重新提交!');
+                    }
+                });
+            }else{
+                alert('请填写完整后提交！')
+            }
+
             return false;
         });
 

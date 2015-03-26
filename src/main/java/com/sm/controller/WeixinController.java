@@ -124,9 +124,8 @@ public class WeixinController extends WeixinControllerSupport{
                 articles.add(article);
             }
             return new NewsMsg(articles);
-        }else if(keyEvent.equals("about")){
-
-            return new TextMsg("关于").addLink("点击跳转", host+"/web/about");
+        }else if(keyEvent.equals("community")){
+            return new TextMsg("微信自有接口调整，功能尚在开发中，敬请期待，感谢您关注！");
         }
         return new TextMsg("服务器回复用户消息!");
     }
