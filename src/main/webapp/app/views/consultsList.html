@@ -47,15 +47,18 @@
                             </a>
                         </div>-->
                     <div class="media-body" style="padding-left:20px;">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)"  style="text-decoration:none;">
                             <h4 class="media-heading" style="color:#444444;">${consult.scheme}</h4>
                         </a>
 
-                        <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 0px 0;overflow: hidden;height:38px;">
+                        <p style="width:100%;color:#7b7b7b;font-size:12px;margin:0 5px 0px 0;overflow: hidden;height:37px;padding-right: 10px;">
                             ${consult.intro}</p>
                     </div>
                 </div>
             </#list>
+            <#if (consults![])?size < 1>
+                您暂无咨询历史！
+            </#if>
         </div>
     </div>
     <script>

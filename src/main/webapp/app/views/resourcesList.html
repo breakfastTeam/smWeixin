@@ -43,36 +43,36 @@
                              style="border-bottom: 2px solid #ef2e24;padding:0px;">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion"
-                                   style="display: block;width: 100%;padding:10px 15px" href="#${key}"
+                                   style="text-decoration:none;display: block;width: 100%;padding:10px 15px" href="#${key}"
                                    onclick="toggleArrow(this)"
                                    aria-expanded="true"
                                    aria-controls="collapseOne">
                                     ${key}
-                                    <img src="../asset/imgs/arrowup.png" style="float: right;width: 25px;">
+                                    <img name="arrow" src="../asset/imgs/arrowup.png" style="float: right;width: 25px;">
                                 </a>
                             </h4>
                         </div>
 
                         <#assign resources=resultMap.get(key)>
                             <div id="${key}" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingOne">
+                                 aria-labelledby="headingOne" style="margin-bottom: 5px;">
                                 <#list resources as resource>
                                     <div class="row" onclick = "toResource('${resource.id}')"
-                                         style="margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae">
-                                        <div class="media">
+                                         style="margin-bottom: 5px;margin-top:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid #aeaeae">
+                                        <div class="media" style="margin-left:10px;margin-bottom: 5px;">
                                             <div class="media-left">
-                                                <a href="javascript:void(0)">
+                                                <a href="javascript:void(0)" style="text-decoration:none;">
                                                     <img class="media-object" src="${resource.thumbnail}"
                                                          style="width:80px" alt="...">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <a href="${ctx}/web/resource?resourceId=${resource.id}">
+                                                <a href="${ctx}/web/resource?resourceId=${resource.id}" style="text-decoration:none;">
                                                     <h4 class="media-heading" style="color:#444444">
                                                         ${resource.name}</h4>
                                                 </a>
 
-                                                <p style="width:100%;color:#c6c6c6;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:38px;">
+                                                <p style="width:100%;color:#c6c6c6;font-size:12px;margin:0 5px 5px 0;overflow: hidden;height:37px;padding-right: 10px;">
                                                     ${resource.intro}</p>
                                             </div>
                                         </div>
@@ -85,6 +85,13 @@
         </div>
     </div>
     <script>
+        $(function(){
+            $(".collapse").first().addClass("in");
+            $("img[name=arrow]").first().css({
+                transform: 'rotate(180deg)',
+                WebkitTransform: 'rotate(180deg)'
+            });
+        });
         function toResource(id){
             window.location.href = "${ctx}/web/resource?resourceId="+id;
         }

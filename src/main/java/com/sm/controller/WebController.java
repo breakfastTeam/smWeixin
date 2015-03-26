@@ -164,7 +164,7 @@ public class WebController {
             mv.addObject("resultMap", result);
             mv.addObject("infoType","产品篇");
         }else{
-            mv.addObject("infoType","未知");
+            mv.addObject("infoType","案例篇");
         }
         mv.setViewName("productIntro");
         return mv;
