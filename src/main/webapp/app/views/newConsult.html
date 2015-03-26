@@ -106,7 +106,7 @@
 
                 data[that.attr('name')] = that.val();
             });
-            if(checked){
+            if(!checked){
                 var scheme=$("#schemeId").find("option:selected").text();
                 data.scheme = scheme;
 
